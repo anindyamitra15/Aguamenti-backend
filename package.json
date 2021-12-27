@@ -1,0 +1,32 @@
+{
+  "name": "aguamenti-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/aguamenti-app.js",
+    "dev": "nodemon src/aguamenti-app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anindyamitra15/Aguamenti-backend.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anindyamitra15/Aguamenti-backend/issues"
+  },
+  "homepage": "https://github.com/anindyamitra15/Aguamenti-backend#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.1.3"
+  },
+  "devDependencies": {
+    "dotenv": "^10.0.0",
+    "nodemon": "^2.0.15"
+  }
+}
