@@ -5,7 +5,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/anindyamitra15/Aguamenti-backend">
-    <img src="src/logo.png" alt="Logo" width="360" height="494">
+    <img src="src/logo.png" alt="Logo" width="80" height="110">
   </a>
 
 <h3 align="center">Aguamenti Backend</h3>
