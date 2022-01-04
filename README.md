@@ -8,10 +8,10 @@
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">project_title</h3>
+<h3 align="center">Aguamenti Backend</h3>
 
   <p align="center">
-    project_description
+    Backend framework to support the IoT implementation of an Automated Home Water Management System
     <br />
     <a href="https://github.com/anindyamitra15/Aguamenti-backend"><strong>Explore the docs »</strong></a>
     <br />
@@ -68,7 +68,7 @@ Here's a blank template to get started: To avoid retyping too much info. Do a se
 ### Built With
 
 
-* [JavaScripy](https://www.javascript.com/)
+* [JavaScript](https://www.javascript.com/)
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
