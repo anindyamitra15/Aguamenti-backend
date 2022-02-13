@@ -9,10 +9,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 //route imports
 const mainRoutes = require("./routes/main.route");
-// const userRoutes = require("./routes/user.route");
+const userRoutes = require("./routes/user.route");
 //route use
 app.use("/", mainRoutes);
-// app.use('/user', userRoutes);
+app.use('/user', userRoutes);
 
 app.listen(port, () => {
   console.log(`Server running at: http://localhost:${port}`);
