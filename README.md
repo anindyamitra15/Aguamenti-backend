@@ -13,7 +13,7 @@
   <p align="center">
     Backend framework to support the IoT implementation of an Automated Home Water Management System
     <br />
-    <a href="https://github.com/anindyamitra15/Aguamenti-backend"><strong>Explore the docs »</strong></a>
+    <a href="https://docs.google.com/spreadsheets/d/1mV6BQ1xp7k6YXZtG5NI4eFCgBcqjfbj1YAz5qzBNO4M/edit?usp=sharing"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://github.com/anindyamitra15/Aguamenti-backend">View Demo</a>
