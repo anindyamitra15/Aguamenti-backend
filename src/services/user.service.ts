@@ -33,7 +33,10 @@ export const Register = async (user: UserRegisterDto): Promise<GenericResponse> 
 
 export const Login = async () => {
     try {
-
+        //TODO: findUser
+        // return 404 if not found
+        // otherwise sign jwt as in Register service <line 22>
+        // return code: 200, message: success, result: {token}
     } catch (error) {
         return { code: 500, message: error as string };
     }
