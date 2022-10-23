@@ -1,6 +1,6 @@
 import { Document, Model, model, Schema } from "mongoose";
 
-interface HouseInterface extends Document {
+export interface HouseInterface extends Document {
     name: string,
     owner_id: Schema.Types.ObjectId
 };

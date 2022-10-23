@@ -1,7 +1,7 @@
 import { Response } from "express";
 
 const messages: { [key: number]: string } = {
-    200: "OK",
+    200: "Success",
     201: "Created",
     202: "Accepted",
     400: "Bad Request",
@@ -14,14 +14,17 @@ const messages: { [key: number]: string } = {
 
 const generateResponse = (
     res: Response,
-    code: number  = 200,
+    code: number = 200,
     result?: any,
-    message?: string) => {
+    message?: string,
+) => {
     if (!res) return;
 
     if (!message) {
         message = code in messages ? messages[code] : code as unknown as string;
     }
+    if (!result)
+        return res.status(code).json({ code, message });
 
     return res.status(code).json({ code, message, result: { ...result } });
 };
