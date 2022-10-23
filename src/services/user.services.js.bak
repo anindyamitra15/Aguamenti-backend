@@ -1,11 +1,11 @@
 const User = require("../models/user.model");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const {
-  bcrypt_salt,
-  access_token,
-  salt_rounds,
-} = require("../../config/env.config");
+// const {
+//   bcrypt_salt,
+//   access_token,
+//   salt_rounds,
+// } = require("../../config/env.config");
 
 const Register = async (name, email, pass, res) => {
   try {
