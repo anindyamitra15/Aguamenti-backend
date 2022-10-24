@@ -27,6 +27,7 @@ export const Register = async (user: UserRegisterDto): Promise<GenericResponse> 
         return { code: 200, message: "Registered", result: { token } };
 
     } catch (error) {
+        console.log(error);
         return { code: 500, message: error as string };
     }
 };
@@ -38,6 +39,7 @@ export const Login = async () => {
         // otherwise sign jwt as in Register service <line 22>
         // return code: 200, message: success, result: {token}
     } catch (error) {
+        console.log(error);
         return { code: 500, message: error as string };
     }
 };
@@ -46,6 +48,7 @@ export const ChangePassword = async () => {
     try {
 
     } catch (error) {
+        console.log(error);
         return { code: 500, message: error as string };
     }
 };
@@ -54,6 +57,7 @@ export const AddHouse = async () => {
     try {
 
     } catch (error) {
+        console.log(error);
         return { code: 500, message: error as string };
     }
 };
@@ -62,6 +66,7 @@ export const RemoveHouse = async () => {
     try {
 
     } catch (error) {
+        console.log(error);
         return { code: 500, message: error as string };
     }
 };

@@ -168,6 +168,193 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "House Routes",
+			"item": [
+				{
+					"name": "Create House",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"AKM's first house\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/house/create",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"house",
+								"create"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"AKM's first house\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/house/create",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"house",
+										"create"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "81"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"51-7YSmYSjUsyFiyTh8KLfL1ncwMSg\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Oct 2022 17:04:03 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"Success\",\n    \"result\": {\n        \"house_id\": \"6356c583645cde002f036c14\"\n    }\n}"
+						},
+						{
+							"name": "house exists",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"AKM's first house\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/house/create",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"house",
+										"create"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "37"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"25-hmosz7xQ0rPV1zIY4MWoR+CuIXA\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 24 Oct 2022 17:29:40 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"House Exists\"\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Root",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}",
+					"host": [
+						"{{base_url}}"
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
@@ -194,6 +381,11 @@
 		{
 			"key": "base_url",
 			"value": "localhost:3020",
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFrbUBnZy5jb20iLCJfaWQiOiI2MzU1OWI2NjA4YTllZTZmNThjZDIzOTkiLCJpYXQiOjE2NjY2Mjg1MDl9.hEtcYVJfsSCyw82H154SXfrLl87KS1ztAN0pwazdjx8",
 			"type": "string"
 		}
 	]
