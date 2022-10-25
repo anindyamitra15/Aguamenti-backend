@@ -1,12 +1,12 @@
 import { genSaltSync, hashSync } from "bcryptjs";
-import { Schema, Document, Model, model } from "mongoose";
+import { Types, Schema, Document, Model, model } from "mongoose";
 import { salt_rounds } from "../envparser";
 
 export interface UserInterface extends Document {
     name: string,
     password: string,
     email: string,
-    house_id?: Array<Schema.Types.ObjectId>
+    house_id?: Array<Types.ObjectId>
 };
 
 const UserSchema: Schema<UserInterface> = new Schema(

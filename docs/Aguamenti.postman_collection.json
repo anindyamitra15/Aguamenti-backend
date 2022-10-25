@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Anindya\",\r\n    \"email\": \"akm@gg.com\",\r\n    \"password\": 1234\r\n}",
+							"raw": "{\r\n    \"name\": \"Onubob\",\r\n    \"email\": \"onu@gg.com\",\r\n    \"password\": 1234\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -337,6 +337,380 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"code\": 400,\n    \"message\": \"House Exists\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete House",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"house_id\": \"6356c583645cde002f036c14\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/house/delete",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"house",
+								"delete"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"house_id\": \"6356c583645cde002f036c14\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/house/delete",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"house",
+										"delete"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "38"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"26-cOmB3yExW7ysag03fGCw2hXZeds\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Oct 2022 19:12:10 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"House Deleted\"\n}"
+						},
+						{
+							"name": "house doesn't exist",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"house_id\": \"6356c583645cde002f036c14\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/house/delete",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"house",
+										"delete"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "61"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3d-q86ewmDdlGqSGrvQ2yR6A8mJtDU\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Oct 2022 19:12:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"No permission or house doesn't exist\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Update House",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"New AKM House\",\r\n    \"house_id\": \"63583a9ab7415e5d2e918af3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/house/update",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"house",
+								"update"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"New AKM House\",\r\n    \"house_id\": \"63583a9ab7415e5d2e918af3\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/house/update",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"house",
+										"update"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "137"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"89-ico1xfFC+LW4gLbDJPjKKVlWDvM\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Oct 2022 19:36:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"Success\",\n    \"result\": {\n        \"_id\": \"63583a9ab7415e5d2e918af3\",\n        \"name\": \"New AKM House\",\n        \"owner_id\": \"63559b6608a9ee6f58cd2399\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Change Owner",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"owner_id\": \"63559b6608a9ee6f58cd2399\",\r\n    \"house_id\": \"63583a9ab7415e5d2e918af3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/house/change-owner",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"house",
+								"change-owner"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"owner_id\": \"63559b6608a9ee6f58cd2399\",\r\n    \"house_id\": \"63583a9ab7415e5d2e918af3\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/house/change-owner",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"house",
+										"change-owner"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "49"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"31-JasLLlZme6l0XhwdbRZCQ0VrCF4\""
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 25 Oct 2022 20:19:58 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"Owner changed to Anindya\"\n}"
 						}
 					]
 				}

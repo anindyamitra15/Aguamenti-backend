@@ -1,7 +1,8 @@
 import { Error } from "mongoose";
-import { CreateHouseDto, DeleteHouseDto } from "../dtos/house.dtos";
+import { ChangeOwnerDto, CreateHouseDto, DeleteHouseDto, UpdateHouseDto } from "../dtos/house.dtos";
 import { GenericResponse } from "../dtos/response.dtos";
 import House from "../models/house.model";
+import User from "../models/user.model";
 
 export const CreateHouse = async (house: CreateHouseDto): Promise<GenericResponse> => {
     try {
@@ -28,9 +29,13 @@ export const DeleteHouse = async (house: DeleteHouseDto): Promise<GenericRespons
     }
 };
 
-export const UpdateHouse = async (house: CreateHouseDto): Promise<GenericResponse> => {
+export const UpdateHouse = async (house: UpdateHouseDto): Promise<GenericResponse> => {
     try {
-        return { code: 200 };
+        const findHouse = await House.findOne({ _id: house._id, owner_id: house.owner_id });
+        if (!findHouse) return { code: 400, message: "No permission or house doesn't exist" };
+        findHouse.name = house.name;
+        await findHouse.save();
+        return { code: 200, result: { ...house } };
     } catch (error) {
         console.log(error);
         return { code: 500 };
@@ -73,9 +78,15 @@ export const RemoveUser = async (house: CreateHouseDto): Promise<GenericResponse
     }
 };
 
-export const ChangeOwner = async (house: CreateHouseDto): Promise<GenericResponse> => {
+export const ChangeOwner = async (data: ChangeOwnerDto): Promise<GenericResponse> => {
     try {
-        return { code: 200 };
+        const findHouse = await House.findOne({ _id: data._id, owner_id: data.owner_id });
+        if (!findHouse) return { code: 400, message: "No permission or house doesn't exist" };
+        const findNewOwner = await User.findOne({ _id: data.new_owner_id });
+        if (!findNewOwner) return { code: 400, message: "Invalid User specified" };
+        findHouse.owner_id = data.new_owner_id;
+        await findHouse.save();
+        return { code: 200, message: `Owner changed to ${findNewOwner.name}` };
     } catch (error) {
         console.log(error);
         return { code: 500 };
