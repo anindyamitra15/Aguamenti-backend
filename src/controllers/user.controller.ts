@@ -20,6 +20,7 @@ export const Login = async (req: Request, res: Response) => {
 };
 
 export const ChangePassword = async (req: Request, res: Response) => {
+    
     return generateResponse(res);
 };
 
