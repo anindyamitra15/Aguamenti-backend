@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UserRegisterDto } from "../dtos/user.dtos";
+import { UserLoginDto, UserRegisterDto } from "../dtos/user.dtos";
 import generateResponse from "../httpresponsecreater";
 import * as UserServices from '../services/user.service';
 
@@ -12,7 +12,11 @@ export const Register = async (req: Request, res: Response) => {
 };
 
 export const Login = async (req: Request, res: Response) => {
-    return generateResponse(res);
+    const user: UserLoginDto = { ...req.body };
+    if (!user.email)
+        return generateResponse(res, 400);
+    const { code, message, result } = await UserServices.Login(user);
+    return generateResponse(res, code, result, message);
 };
 
 export const ChangePassword = async (req: Request, res: Response) => {

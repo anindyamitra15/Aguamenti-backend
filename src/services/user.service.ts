@@ -1,13 +1,16 @@
 import { GenericResponse } from "../dtos/response.dtos";
-import { UserRegisterDto } from "../dtos/user.dtos";
+import { UserLoginDto, UserRegisterDto } from "../dtos/user.dtos";
 import User from "../models/user.model";
 import jwt from "jsonwebtoken";
 import { jwt_secret } from "../envparser";
+import { compare } from "bcryptjs";
 
 export const Register = async (user: UserRegisterDto): Promise<GenericResponse> => {
     try {
         const findUser = await User.findOne({ email: user.email });
         if (findUser) {
+            if (!await compare(user.password, findUser.password))
+                return { code: 400, message: "Credentials doesn't match" };
             const token = jwt.sign({
                 email: findUser.email,
                 _id: findUser._id
@@ -32,12 +35,24 @@ export const Register = async (user: UserRegisterDto): Promise<GenericResponse> 
     }
 };
 
-export const Login = async () => {
+export const Login = async (user: UserLoginDto): Promise<GenericResponse> => {
     try {
         //TODO: findUser
         // return 404 if not found
         // otherwise sign jwt as in Register service <line 22>
         // return code: 200, message: success, result: {token}
+        const findUser = await User.findOne({ email: user.email })
+        if (!findUser)
+            return { code: 404, message: "User doesn't exist" };
+
+        if (!await compare(user.password, findUser.password))
+            return { code: 400, message: "Credentials doesn't match" };
+        const token = jwt.sign({
+            email: findUser.email,
+            _id: findUser._id
+        }, jwt_secret);
+        return { code: 200, message: "Logged in", result: { token } };
+
     } catch (error) {
         console.log(error);
         return { code: 500, message: error as string };

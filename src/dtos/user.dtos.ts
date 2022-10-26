@@ -7,3 +7,7 @@ export interface UserRegisterDto {
     house_id?: [Types.ObjectId]
 };
 
+export interface UserLoginDto {
+    password: string,
+    email: string
+};

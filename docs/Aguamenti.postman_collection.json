@@ -1,9 +1,8 @@
 {
 	"info": {
-		"_postman_id": "e5d99a56-9bf0-4c5b-ab77-8828e55dd9c5",
+		"_postman_id": "31143cca-5c8d-4da6-9201-540e0e800d05",
 		"name": "Aguamenti",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "13842212"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
@@ -164,6 +163,99 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"code\": 202,\n    \"message\": \"User exists\",\n    \"result\": {\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFrbUBnZy5jb20iLCJfaWQiOiI2MzU1OWI2NjA4YTllZTZmNThjZDIzOTkiLCJpYXQiOjE2NjY1NTQ3NDJ9.mTPwjfwep3Qt3aQMtJmrtyzUE9kjZyREbqeaOoA2Z94\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "User Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"akm@gg.com\",\r\n    \"password\":\"1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "successful user login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"akm@gg.com\",\r\n    \"password\":\"1234\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/user/login",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"user",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "233"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"e9-eLUKHxKZr4ObIPa2VQ5XR7qt4aY\""
+								},
+								{
+									"key": "Date",
+									"value": "Wed, 26 Oct 2022 07:46:07 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"Logged in\",\n    \"result\": {\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFrbUBnZy5jb20iLCJfaWQiOiI2MzU1OWI2NjA4YTllZTZmNThjZDIzOTkiLCJpYXQiOjE2NjY3NzAzNjd9.MpLhgEM6UUpwVR5wE-DLFFwuKK1x8e82pN7qoV06Wik\"\n    }\n}"
 						}
 					]
 				}
