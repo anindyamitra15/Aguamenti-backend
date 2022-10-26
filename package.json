@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npx cross-env NODE_ENV=development ts-node-dev src",
     "build": "tsc",
-    "start": "npx cross-env NODE_ENV=production node dist",
+    "start": "tsc && npx cross-env NODE_ENV=production node dist",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

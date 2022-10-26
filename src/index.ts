@@ -19,7 +19,7 @@ app.use("/device", DeviceRouter);
 
 app.get("/", async (_, res) => {
     res.send(`Server running since ${serverStartTime.toLocaleString()}`);
-})
+});
 
 
 const httpServerObj = app.listen(port, () => {
