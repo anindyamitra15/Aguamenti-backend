@@ -1,5 +1,5 @@
 import { GenericResponse } from "../dtos/response.dtos";
-import { UserLoginDto, UserRegisterDto } from "../dtos/user.dtos";
+import { UserChngPassDto, UserLoginDto, UserRegisterDto } from "../dtos/user.dtos";
 import User from "../models/user.model";
 import jwt from "jsonwebtoken";
 import { jwt_secret } from "../envparser";
@@ -59,8 +59,18 @@ export const Login = async (user: UserLoginDto): Promise<GenericResponse> => {
     }
 };
 
-export const ChangePassword = async () => {
+export const ChangePassword = async (user: UserChngPassDto): Promise<GenericResponse> => {
     try {
+        const findUser = await User.findOne({ email: user.email });
+        if (!findUser)
+            return { code: 404, message: "No such user exist" }
+        if (!await compare(user.old_pass, findUser.password))
+            return { code: 400, message: "Current Password doesn't match" }
+        if (await compare(user.new_pass, findUser.password))
+            return { code: 400, message: "Old Password can't be same as New Password" }
+        findUser.password = user.new_pass;
+        await findUser.save();
+        return { code: 200, message: "Password Changed", result: { ...user } }
 
     } catch (error) {
         console.log(error);

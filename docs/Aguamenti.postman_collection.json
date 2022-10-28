@@ -2,7 +2,8 @@
 	"info": {
 		"_postman_id": "31143cca-5c8d-4da6-9201-540e0e800d05",
 		"name": "Aguamenti",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16504998"
 	},
 	"item": [
 		{
@@ -15,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Onubob\",\r\n    \"email\": \"onu@gg.com\",\r\n    \"password\": 1234\r\n}",
+							"raw": "{\r\n    \"name\": \"Luke\",\r\n    \"email\": \"luke@blue.com\",\r\n    \"password\": \"5678\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -173,7 +174,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\":\"akm@gg.com\",\r\n    \"password\":\"1234\"\r\n}",
+							"raw": "{\r\n    \"email\":\"luke@blue.com\",\r\n    \"password\":\"5678\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -256,6 +257,239 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"code\": 200,\n    \"message\": \"Logged in\",\n    \"result\": {\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFrbUBnZy5jb20iLCJfaWQiOiI2MzU1OWI2NjA4YTllZTZmNThjZDIzOTkiLCJpYXQiOjE2NjY3NzAzNjd9.MpLhgEM6UUpwVR5wE-DLFFwuKK1x8e82pN7qoV06Wik\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "User Change Password",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"luke@blue.com\",\r\n    \"old_pass\":\"5678\",\r\n    \"new_pass\":\"1234\",\r\n    \"_id\":\"635bf8acc672833b04dd3b3a\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/user/change-password",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"user",
+								"change-password"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "current pass mismatch",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"luke@blue.com\",\r\n    \"old_pass\":\"1234\",\r\n    \"new_pass\":\"5678\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/user/change-password",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"user",
+										"change-password"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "55"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"37-c+hCek6DR7zruLu0+ViK17K5ib8\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 28 Oct 2022 18:00:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"Current Password doesn't match\"\n}"
+						},
+						{
+							"name": "new pass same as old",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"luke@blue.com\",\r\n    \"old_pass\":\"5678\",\r\n    \"new_pass\":\"5678\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/user/change-password",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"user",
+										"change-password"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "67"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"43-iI6PBfQATsAPoGoHox//gJ0Ss5M\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 28 Oct 2022 18:01:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"Old Password can't be same as New Password\"\n}"
+						},
+						{
+							"name": "pass changed success",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"luke@blue.com\",\r\n    \"old_pass\":\"5678\",\r\n    \"new_pass\":\"1234\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/user/change-password",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"user",
+										"change-password"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "145"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"91-F0yomTandF/QNovJ5/Mk7qwP/uw\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 28 Oct 2022 18:01:43 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"Password Changed\",\n    \"result\": {\n        \"_id\": \"63559b6608a9ee6f58cd2399\",\n        \"old_pass\": \"5678\",\n        \"new_pass\": \"1234\",\n        \"email\": \"luke@blue.com\"\n    }\n}"
 						}
 					]
 				}

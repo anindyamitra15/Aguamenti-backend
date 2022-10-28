@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UserLoginDto, UserRegisterDto } from "../dtos/user.dtos";
+import { UserChngPassDto, UserLoginDto, UserRegisterDto } from "../dtos/user.dtos";
 import generateResponse from "../httpresponsecreater";
 import * as UserServices from '../services/user.service';
 
@@ -20,7 +20,16 @@ export const Login = async (req: Request, res: Response) => {
 };
 
 export const ChangePassword = async (req: Request, res: Response) => {
-    return generateResponse(res);
+    const user: UserChngPassDto = {
+        _id: req.body.user._id,
+        old_pass: req.body.old_pass,
+        new_pass: req.body.new_pass,
+        email: req.body.email
+    };
+    if (!user._id)
+        return generateResponse(res, 400, "ID required");
+    const { code, message, result } = await UserServices.ChangePassword(user);
+    return generateResponse(res, code, result, message);
 };
 
 export const AddHouse = async (req: Request, res: Response) => {
