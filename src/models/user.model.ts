@@ -22,7 +22,7 @@ const UserSchema: Schema<UserInterface> = new Schema(
 );
 
 UserSchema.pre<UserInterface>("save", function (next) {
-    if (!this.isModified("password") || !this.isNew) {
+    if (!this.isModified("password") && !this.isNew) {
         next();
     } else {
         if (this.password) {

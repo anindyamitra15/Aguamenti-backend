@@ -16,5 +16,5 @@ export interface UserChngPassDto{
     old_pass: string,
     new_pass: string,
     email: string,
-    _id: string
+    _id: Types.ObjectId
 }
