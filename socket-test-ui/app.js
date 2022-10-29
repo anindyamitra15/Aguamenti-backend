@@ -1,4 +1,5 @@
 let socket = null;
+let intervalEvent = null;
 
 const validateUrl = () => {
     const value = String(document.getElementById('uri').value);
@@ -11,12 +12,14 @@ const validateUrl = () => {
         document.getElementById('output').innerText = `Enter a valid URL`;
         document.getElementById('connect').hidden = true;
     }
-}
+};
+
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('uri').value = localStorage.getItem('url');
     validateUrl();
     document.getElementById('disconnect').hidden = true;
 });
+
 document.getElementById('uri').addEventListener("input", () => {
     validateUrl();
 });
@@ -24,14 +27,36 @@ document.getElementById('uri').addEventListener("input", () => {
 document.getElementById("connect").addEventListener("click", function (e) {
     e.preventDefault();
     const url = String(document.getElementById('uri').value);
+
     socket = io(url);
+
+    socket.on("connect", () => {
+        document.getElementById('main-section').innerHTML = `<p id="socket-id">${socket.id}</p><p id="socket-data"></p>`
+    });
+
+    socket.on("disconnect", () => {
+        document.getElementById('main-section').removeChild(document.getElementById('socket-id'))
+    });
+    i = 0;
+    intervalEvent = setInterval(() => {
+        socket.emit("testServer", `Hi Server - ${i}`);
+        i++;
+    }, 2000);
+
+    socket.on("testClient", data => {
+        document.getElementById('socket-data').innerHTML = data;
+    })
+
     alert("Connected to Socket");
+
     localStorage.setItem('url', url);
     document.getElementById('disconnect').hidden = false;
 });
 
 document.getElementById('disconnect').addEventListener('click', () => {
-    document.getElementById('disconnect').hidden = true;
     socket?.disconnect();
+    clearInterval(intervalEvent);
+    document.getElementById('disconnect').hidden = true;
     alert('Socket connection dropped');
 });
+
