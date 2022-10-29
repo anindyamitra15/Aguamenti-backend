@@ -9,6 +9,7 @@ import HouseRouter from './routes/house.route';
 import DeviceRouter from './routes/device.route';
 import { ClientToServerEvents, InterServerEvents, ServerToClientEvents, SocketData } from './dtos/socket.io.dtos';
 import { socketConnection } from './services/socket.io.service';
+import socketTokenAuth from './middlewares/socketauth.middleware';
 
 const serverStartTime = new Date();
 
@@ -64,3 +65,5 @@ instrument(io, {
 
 
 io.on("connection", socketConnection);
+
+io.use(socketTokenAuth);

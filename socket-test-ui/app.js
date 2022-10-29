@@ -28,7 +28,11 @@ document.getElementById("connect").addEventListener("click", function (e) {
     e.preventDefault();
     const url = String(document.getElementById('uri').value);
 
-    socket = io(url);
+    socket = io(url, {
+        extraHeaders: {
+            // token: "token-gg"
+        }
+    });
 
     socket.on("connect", () => {
         document.getElementById('main-section').innerHTML = `<p id="socket-id">${socket.id}</p><p id="socket-data"></p>`
