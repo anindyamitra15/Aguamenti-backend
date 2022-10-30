@@ -5,12 +5,12 @@ import { jwt_secret } from "../envparser";
 import User from "../models/user.model";
 
 const socketTokenAuth = async (socket: Socket, next: (err?: ExtendedError | undefined) => void) => {
-    console.log(socket.handshake.headers.token)
     try {
         const token = socket.handshake.headers.token as string;
 
         //if it's not an user (it must be a device)
         if (!token) { next(); return; }
+
         const decoded = jwt.verify(
             token,
             jwt_secret
@@ -21,14 +21,19 @@ const socketTokenAuth = async (socket: Socket, next: (err?: ExtendedError | unde
             return;
         }
 
+
         const findUser = await User.findOne({ email: decoded.email }, { password: 0 });
         if (!findUser) {
             next(new Error("Invalid User"));
             return;
         }
 
-        socket.data.user._id = decoded._id;
-        socket.data.user.email = decoded.email;
+        socket.data = {
+            user: {
+                _id: decoded._id,
+                _email: decoded.email
+            }
+        };
 
         next();
 

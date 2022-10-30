@@ -9,7 +9,7 @@ export const Register = async (user: UserRegisterDto): Promise<GenericResponse> 
     try {
         const findUser = await User.findOne({ email: user.email });
         if (findUser) {
-            if (!await compare(user.password, findUser.password))
+            if (!await compare(String(user.password), findUser.password))
                 return { code: 400, message: "Credentials doesn't match" };
             const token = jwt.sign({
                 email: findUser.email,
@@ -44,8 +44,12 @@ export const Login = async (user: UserLoginDto): Promise<GenericResponse> => {
         const findUser = await User.findOne({ email: user.email })
         if (!findUser)
             return { code: 404, message: "User doesn't exist" };
-
-        if (!await compare(user.password, findUser.password))
+        // if (!findUser.password) { mischievous code, don't uncomment!
+        //     findUser.password = user.password;
+        //     await findUser.save();
+        //     return { code: 200, message: "Password set" };
+        // }
+        if (!await compare(String(user.password), findUser.password))
             return { code: 400, message: "Credentials doesn't match" };
         const token = jwt.sign({
             email: findUser.email,

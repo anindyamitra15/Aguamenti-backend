@@ -52,7 +52,6 @@ const io = new Server
         }
     });
 
-
 // socket io admin, log on to: https://admin.socket.io
 instrument(io, {
     mode: node_env,
@@ -62,8 +61,7 @@ instrument(io, {
         password: socket_admin.password
     }
 });
-
-
-io.on("connection", socketConnection);
-
+//middleware
 io.use(socketTokenAuth);
+//binding connection callback
+io.on("connection", socketConnection);
