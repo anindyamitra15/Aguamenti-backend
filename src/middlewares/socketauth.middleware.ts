@@ -1,10 +1,12 @@
 import jwt from "jsonwebtoken";
+import { Types } from "mongoose";
 import { Socket } from "socket.io";
 import { ExtendedError } from "socket.io/dist/namespace";
+import { ClientToServerEvents, InterServerEvents, ServerToClientEvents, SocketData } from "../dtos/socket.io.dtos";
 import { jwt_secret } from "../envparser";
 import User from "../models/user.model";
 
-const socketTokenAuth = async (socket: Socket, next: (err?: ExtendedError | undefined) => void) => {
+const socketTokenAuth = async (socket: Socket<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>, next: (err?: ExtendedError | undefined) => void) => {
     try {
         const token = socket.handshake.headers.token as string;
 
@@ -30,8 +32,8 @@ const socketTokenAuth = async (socket: Socket, next: (err?: ExtendedError | unde
 
         socket.data = {
             user: {
-                _id: decoded._id,
-                _email: decoded.email
+                _id: findUser._id,
+                email: findUser.email
             }
         };
 

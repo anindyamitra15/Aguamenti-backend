@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { node_env, port, socket_admin } from './envparser';
 import dbconnect from './dbconnect';
-import { Server } from "socket.io";
+import socketio from "socket.io";
 import { instrument } from '@socket.io/admin-ui';
 import UserRouter from './routes/user.route';
 import HouseRouter from './routes/house.route';
@@ -33,7 +33,7 @@ const httpServerObj = app.listen(port, () => {
 });
 
 // socket io setup
-const io = new Server
+const io: socketio.Server = new socketio.Server
     <
         ClientToServerEvents,
         ServerToClientEvents,

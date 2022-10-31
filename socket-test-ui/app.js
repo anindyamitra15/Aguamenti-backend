@@ -50,6 +50,9 @@ document.getElementById("connect").addEventListener("click", function (e) {
     });
 
     socket.on("disconnect", () => {
+        clearInterval(intervalEvent);
+        document.getElementById('disconnect').hidden = true;
+        alert('Socket connection dropped');
         document.getElementById('main-section').removeChild(document.getElementById('socket-id'))
     });
     i = 0;
@@ -73,10 +76,5 @@ document.getElementById("connect").addEventListener("click", function (e) {
 
 document.getElementById('disconnect').addEventListener('click', () => {
     socket?.disconnect();
-
-    clearInterval(intervalEvent);
-    document.getElementById('disconnect').hidden = true;
-
-    alert('Socket connection dropped');
 });
 
