@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ChangeOwnerDto, CreateHouseDto, DeleteHouseDto, UpdateHouseDto } from "../dtos/house.dtos";
+import { ChangeOwnerDto, CreateHouseDto, DeleteHouseDto, UpdateHouseDto, UpdateUserHouseDto } from "../dtos/house.dtos";
 import generateResponse from "../httpresponsecreater";
 import * as HouseService from '../services/house.service';
 
@@ -34,8 +34,31 @@ export const UpdateHouse = async (req: Request, res: Response) => {
 };
 export const AddDevice = async (req: Request, res: Response) => { };
 export const RemoveDevice = async (req: Request, res: Response) => { };
-export const AddUser = async (req: Request, res: Response) => { };
-export const RemoveUser = async (req: Request, res: Response) => { };
+
+export const AddUser = async (req: Request, res: Response) => {
+    const data: UpdateUserHouseDto = {
+        user_id: req.body.user_id,
+        house_id: req.body.house_id,
+        owner_id: req.body.user._id
+    };
+
+    if (!data.user_id || !data.house_id) return generateResponse(res, 400);
+
+    const { code, message, result } = await HouseService.AddUser(data);
+    return generateResponse(res, code, result, message);
+};
+export const RemoveUser = async (req: Request, res: Response) => {
+    const data: UpdateUserHouseDto = {
+        user_id: req.body.user_id,
+        house_id: req.body.house_id,
+        owner_id: req.body.user._id
+    }
+
+    if (!data.user_id || !data.house_id) return generateResponse(res, 400);
+
+    const { code, message, result } = await HouseService.RemoveUser(data);
+    return generateResponse(res, code, result, message);
+};
 export const ChangeOwner = async (req: Request, res: Response) => {
     const data: ChangeOwnerDto = {
         new_owner_id: req.body.owner_id,

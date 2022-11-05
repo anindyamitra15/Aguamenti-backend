@@ -891,6 +891,342 @@
 							"body": "{\n    \"code\": 200,\n    \"message\": \"Owner changed to Anindya\"\n}"
 						}
 					]
+				},
+				{
+					"name": "Add User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": \"63584260fa0aba566423e6be\",\r\n    \"house_id\": \"63583a9ab7415e5d2e918af3\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/house/add-user",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"house",
+								"add-user"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_id\": \"63584260fa0aba566423e6be\",\r\n    \"house_id\": \"63583a9ab7415e5d2e918af3\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/house/add-user",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"house",
+										"add-user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "65"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"41-bzdMfpOTvhe02Mrwzes1Csap5zE\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Nov 2022 10:04:32 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"User Onubob added to House New AKM House\"\n}"
+						},
+						{
+							"name": "user already present",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_id\": \"63584260fa0aba566423e6be\",\r\n    \"house_id\": \"6358db4bff2696cdad866be1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/house/add-user",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"house",
+										"add-user"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "57"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"39-PJJl5HpnsazlA03A7OeP5N9WknY\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Nov 2022 10:11:47 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 202,\n    \"message\": \"User already has access to house\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user_id\": \"63584260fa0aba566423e6be\",\r\n    \"house_id\": \"6358db4bff2696cdad866be1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/house/remove-user",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"house",
+								"remove-user"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_id\": \"63584260fa0aba566423e6be\",\r\n    \"house_id\": \"6358db4bff2696cdad866be1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/house/remove-user",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"house",
+										"remove-user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "73"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"49-5J5ROuYRzLPyBenlSTt0tCUN4/4\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Nov 2022 10:10:44 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"User Onubob removed from House AKM's first house\"\n}"
+						},
+						{
+							"name": "user already absent",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"user_id\": \"63584260fa0aba566423e6be\",\r\n    \"house_id\": \"6358db4bff2696cdad866be1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/house/remove-user",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"house",
+										"remove-user"
+									]
+								}
+							},
+							"status": "Accepted",
+							"code": 202,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "58"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"3a-A6etM+nMjiCBFnOVIr6BSNcQRww\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Nov 2022 10:11:17 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 202,\n    \"message\": \"User doesn't have access to house\"\n}"
+						}
+					]
 				}
 			]
 		},

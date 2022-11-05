@@ -21,3 +21,9 @@ export interface ChangeOwnerDto {
     owner_id: Types.ObjectId,
     _id: Types.ObjectId
 };
+
+export interface UpdateUserHouseDto {
+    user_id?: Types.ObjectId,
+    house_id?: Types.ObjectId,
+    owner_id: Types.ObjectId
+};
