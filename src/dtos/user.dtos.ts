@@ -17,4 +17,8 @@ export interface UserChngPassDto{
     new_pass: string,
     email: string,
     _id: Types.ObjectId
-}
+};
+
+export interface AllHousesDto {
+    user_id: Types.ObjectId
+};

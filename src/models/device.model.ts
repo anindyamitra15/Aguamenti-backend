@@ -6,7 +6,6 @@ interface DeviceInterface extends Document {
     state?: boolean,
     value?: any, //TODO: check if any restrictions can be applied
     house_id?: Types.ObjectId,
-    endpoint?: string
 };
 
 const DeviceSchema: Schema<DeviceInterface> = new Schema(
@@ -16,7 +15,6 @@ const DeviceSchema: Schema<DeviceInterface> = new Schema(
         state: { type: Boolean },
         value: { type: Schema.Types.Mixed },
         house_id: { type: Schema.Types.ObjectId, ref: 'House' },
-        endpoint: { type: String }
     },
     {
         timestamps: true

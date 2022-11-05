@@ -4,7 +4,7 @@ import { jwt_secret } from "../envparser";
 import generateResponse from "../httpresponsecreater";
 import User from "../models/user.model";
 
-const AuthorizeFromToken = async (
+const AuthorizeUserFromToken = async (
     req: Request,
     res: Response,
     next: NextFunction) => {
@@ -34,4 +34,4 @@ const AuthorizeFromToken = async (
     }
 };
 
-export default AuthorizeFromToken;
+export default AuthorizeUserFromToken;

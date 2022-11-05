@@ -15,9 +15,12 @@ export interface InterServerEvents {
 };
 
 export interface SocketData {
-    testString: string;
     user: {
         _id: Types.ObjectId,
         email: string
+    },
+    device: {
+        _id: Types.ObjectId,
+        chip_id: string
     }
 };

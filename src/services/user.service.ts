@@ -1,5 +1,5 @@
 import { GenericResponse } from "../dtos/response.dtos";
-import { UserChngPassDto, UserLoginDto, UserRegisterDto } from "../dtos/user.dtos";
+import { AllHousesDto, UserChngPassDto, UserLoginDto, UserRegisterDto } from "../dtos/user.dtos";
 import User from "../models/user.model";
 import jwt from "jsonwebtoken";
 import { jwt_secret } from "../envparser";
@@ -94,6 +94,17 @@ export const AddHouse = async () => {
 export const RemoveHouse = async () => {
     try {
 
+    } catch (error) {
+        console.log(error);
+        return { code: 500, message: error as string };
+    }
+};
+
+export const AllHouses = async (data: AllHousesDto): Promise<GenericResponse> => {
+    try {
+        const findUser = await User.findOne({ _id: data.user_id }, { password: 0 }).populate('house_ids');
+        if(!findUser) return {code: 404, message: "User doesn't exist and this block isn't triggered as well :)"};
+        return { code: 200, result: findUser.house_ids, message: `Here are the houses for user: ${findUser.name}` };
     } catch (error) {
         console.log(error);
         return { code: 500, message: error as string };

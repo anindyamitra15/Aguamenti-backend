@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UserChngPassDto, UserLoginDto, UserRegisterDto } from "../dtos/user.dtos";
+import { AllHousesDto, UserChngPassDto, UserLoginDto, UserRegisterDto } from "../dtos/user.dtos";
 import generateResponse from "../httpresponsecreater";
 import * as UserServices from '../services/user.service';
 
@@ -42,4 +42,12 @@ export const RemoveHouse = async (req: Request, res: Response) => {
 
 export const EmailExists = async (req: Request, res: Response) => {
     return generateResponse(res);
+};
+
+export const AllHouses = async (req: Request, res: Response) => {
+    const data: AllHousesDto = {
+        user_id: req.body.user._id
+    };
+    const {code, message, result} = await UserServices.AllHouses(data);
+    return generateResponse(res, code, result, message);
 };
