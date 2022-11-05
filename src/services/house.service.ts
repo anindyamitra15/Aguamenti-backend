@@ -1,9 +1,10 @@
-import { ChangeOwnerDto, CreateHouseDto, DeleteHouseDto, UpdateHouseDto, UpdateUserHouseDto } from "../dtos/house.dtos";
+import { ChangeOwnerDto, CreateHouseDto, DeleteHouseDto, AddDeviceToHouseDto, UpdateHouseDto, UpdateUserHouseDto, RemoveDeviceFromHouseDto } from "../dtos/house.dtos";
 import { GenericResponse } from "../dtos/response.dtos";
 import House from "../models/house.model";
 import User from "../models/user.model";
 import Randomstring from "randomstring";
 import { Types } from "mongoose";
+import Device from "../models/device.model";
 
 export const CreateHouse = async (house: CreateHouseDto): Promise<GenericResponse> => {
     try {
@@ -57,18 +58,61 @@ export const UpdateHouse = async (house: UpdateHouseDto): Promise<GenericRespons
     }
 };
 
-export const AddDevice = async (house: CreateHouseDto): Promise<GenericResponse> => {
+export const AddDevice = async (data: AddDeviceToHouseDto): Promise<GenericResponse> => {
     try {
-        return { code: 200 };
+        const findDevice = await Device.findOne({
+            $or: [
+                { _id: data.device_id },
+                { chip_id: data.chip_id }
+            ]
+        });
+        if (!findDevice) return { code: 404, message: "Invalid device identity" };
+
+        // check if the user at least belongs to the old house containing the device
+        if (findDevice.house_id) {
+            const index = data.existing_house_ids?.indexOf(findDevice.house_id);
+            if (index === undefined || index < 0) return { code: 403, message: "Device doesn't belong to this user" };
+        }
+
+        const findNewHouse = await House.findOne({
+            _id: data.house_id,
+            owner_id: data.owner_id
+        });
+        if (!findNewHouse) return { code: 403, message: "No permission" };
+
+        findDevice.house_id = findNewHouse._id;
+
+        await findDevice.save();
+
+        return { code: 200, message: `Device ${findDevice.name} added to house ${findNewHouse.name}` };
     } catch (error) {
         console.log(error);
         return { code: 500, message: error as string };
     }
 };
 
-export const RemoveDevice = async (house: CreateHouseDto): Promise<GenericResponse> => {
+export const RemoveDevice = async (data: RemoveDeviceFromHouseDto): Promise<GenericResponse> => {
     try {
-        return { code: 200 };
+        const findDevice = await Device.findOne({
+            $or: [
+                { _id: data.device_id },
+                { chip_id: data.chip_id }
+            ]
+        });
+        if (!findDevice) return { code: 404, message: "Invalid device identity" };
+
+        // check if the user at least belongs to the old house containing the device
+        if (findDevice.house_id) {
+            const index = data.existing_house_ids?.indexOf(findDevice.house_id);
+            if (index === undefined || index < 0) return { code: 403, message: "Device doesn't belong to this user" };
+        }
+
+        // remove the house id from device
+        findDevice.house_id = undefined;
+
+        await findDevice.save();
+
+        return { code: 200, message: `Device ${findDevice.name} removed from the house` };
     } catch (error) {
         console.log(error);
         return { code: 500 };

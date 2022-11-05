@@ -27,3 +27,18 @@ export interface UpdateUserHouseDto {
     house_id?: Types.ObjectId,
     owner_id: Types.ObjectId
 };
+
+export interface AddDeviceToHouseDto {
+    device_id?: Types.ObjectId,
+    chip_id?: string,
+    existing_house_ids?: [Types.ObjectId],
+    house_id?: Types.ObjectId,
+    owner_id: Types.ObjectId
+};
+
+export interface RemoveDeviceFromHouseDto {
+    device_id?: Types.ObjectId,
+    chip_id?: string,
+    existing_house_ids?: [Types.ObjectId],
+    owner_id: Types.ObjectId
+};

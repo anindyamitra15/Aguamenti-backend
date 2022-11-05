@@ -1227,6 +1227,212 @@
 							"body": "{\n    \"code\": 202,\n    \"message\": \"User doesn't have access to house\"\n}"
 						}
 					]
+				},
+				{
+					"name": "Add Device",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"chip_id\": \"34748939\",\r\n    \"house_id\": \"636254de1d68190b44dcbf94\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/house/add-device",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"house",
+								"add-device"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"chip_id\": \"34748939\",\r\n    \"house_id\": \"636254de1d68190b44dcbf94\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/house/add-device",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"house",
+										"add-device"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "97"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"61-5NsES1hENkvyR0dS/QW457j0oQo\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Nov 2022 14:46:30 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"Device 2nd Nov first device (updated) added to house 2nd Nov House AKM 2\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Remove Device",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"chip_id\": \"34748939\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/house/remove-device",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"house",
+								"remove-device"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"chip_id\": \"34748939\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/house/remove-device",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"house",
+										"remove-device"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "85"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"55-5H1r/+sOJXJL8Bvga4v85gPLZpY\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 05 Nov 2022 15:00:02 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"Device 2nd Nov first device (updated) removed from the house\"\n}"
+						}
+					]
 				}
 			]
 		},
