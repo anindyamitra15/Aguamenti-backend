@@ -3,11 +3,11 @@ import { ClientToServerEvents, InterServerEvents, ServerToClientEvents, SocketDa
 let intervalObj: any = null;
 
 export function socketConnection(socket: Socket<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>) {
-    console.log(socket.id, "connected");
-    
+    console.log(`${socket.data.type} with ID:`, socket.id, "connected");
+
     socket.on("disconnect", onDisconnection(socket));
     socket.on("testServer", onTestServer(socket));
-    
+
     let i = 0;
     intervalObj = setInterval(() => {
         socket.emit("testClient", `Hi Client! - ${i}`);
@@ -18,7 +18,7 @@ export function socketConnection(socket: Socket<ClientToServerEvents, ServerToCl
 
 const onDisconnection = (socket: Socket) => {
     return () => {
-        console.log(`Disconnected from ${socket.id}`);
+        console.log(`Disconnected ${socket.data.type} from ${socket.id}`);
         if (intervalObj !== null) clearInterval(intervalObj);
     };
 };

@@ -42,7 +42,7 @@ document.getElementById("connect").addEventListener("click", function (e) {
     const url = String(document.getElementById('uri').value);
     const token = String(document.getElementById('token').value);
     socket = io(url, {
-        extraHeaders: { token }
+        extraHeaders: { authorization: `Bearer ${token}` }
     });
 
     socket.on("connect", () => {

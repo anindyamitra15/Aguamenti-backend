@@ -22,5 +22,6 @@ export interface SocketData {
     device: {
         _id: Types.ObjectId,
         chip_id: string
-    }
+    },
+    type: "User" | "Device"
 };
