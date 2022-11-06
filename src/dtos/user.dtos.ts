@@ -12,11 +12,25 @@ export interface UserLoginDto {
     email: string
 };
 
-export interface UserChngPassDto{
+export interface UserChngPassDto {
     old_pass: string,
     new_pass: string,
     email: string,
     _id: Types.ObjectId
+};
+
+export interface AddHouseDto {
+    owner_id: Types.ObjectId,
+    house_id?: Types.ObjectId,
+    user_id?: Types.ObjectId,
+    email?: string
+};
+
+export interface RemoveHouseDto {
+    owner_id: Types.ObjectId,
+    house_id?: Types.ObjectId,
+    user_id?: Types.ObjectId,
+    email?: string
 };
 
 export interface AllHousesDto {

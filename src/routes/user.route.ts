@@ -7,8 +7,8 @@ const UserRouter: Router = Router();
 UserRouter.post("/register", UserController.Register);
 UserRouter.post("/login", UserController.Login);
 UserRouter.put("/change-password", AuthorizeUserFromToken, UserController.ChangePassword);
-UserRouter.put("/add-house");
-UserRouter.put("/remove-house");
+UserRouter.put("/add-house", AuthorizeUserFromToken, UserController.AddHouse);
+UserRouter.put("/remove-house", AuthorizeUserFromToken, UserController.RemoveHouse);
 // TODO: need to introduce filter queries (later)
 UserRouter.get("/all-houses", AuthorizeUserFromToken, UserController.AllHouses);
 // for ajax during registration
