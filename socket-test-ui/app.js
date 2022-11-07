@@ -1,8 +1,9 @@
 let socket = null;
 let intervalEvent = null;
 
+renderControlPanel(false);
 
-const validateUrl = () => {
+function validateUrl() {
     const value = String(document.getElementById('uri').value);
     if (
         value.search("http://") != -1 &&
@@ -47,23 +48,30 @@ document.getElementById("connect").addEventListener("click", function (e) {
 
     socket.on("connect", () => {
         document.getElementById('main-section').innerHTML = `<p id="socket-id">${socket.id}</p><p id="socket-data"></p>`
+        renderControlPanel(true);
     });
 
     socket.on("disconnect", () => {
         clearInterval(intervalEvent);
         document.getElementById('disconnect').hidden = true;
         alert('Socket connection dropped');
-        document.getElementById('main-section').removeChild(document.getElementById('socket-id'))
+        document.getElementById('main-section').removeChild(document.getElementById('socket-id'));
+        renderControlPanel(false);
     });
-    i = 0;
-    intervalEvent = setInterval(() => {
-        socket.emit("testServer", `Hi Server - ${i}`);
-        i++;
-    }, 4000);
+    // i = 0;
+    // intervalEvent = setInterval(() => {
+    //     socket.emit("testServer", `Hi Server - ${i}`);
+    //     i++;
+    // }, 4000);
 
     socket.on("testClient", data => {
         document.getElementById('socket-data').innerHTML = data;
-    })
+    });
+
+    socket.on('to_ui', (data) => {
+        console.log(data);
+        document.getElementById('from_device').innerText = data;
+    });
 
 
     localStorage.setItem('url', url);
@@ -77,4 +85,16 @@ document.getElementById("connect").addEventListener("click", function (e) {
 document.getElementById('disconnect').addEventListener('click', () => {
     socket?.disconnect();
 });
+
+document.getElementById('from_ui').addEventListener(
+    'input',
+    (x) => {
+        const value = x.target.value;
+        socket?.emit("from_ui", value);
+    }
+);
+
+function renderControlPanel(x) {
+    document.getElementById('ctrl').hidden = !(x === true);
+}
 

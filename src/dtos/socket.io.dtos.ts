@@ -2,12 +2,14 @@ import { Types } from "mongoose";
 
 export interface ServerToClientEvents {
     testClient: (data: string) => void;
-    deviceSide: () => void;
+    to_device: (data: string) => void;
+    to_ui: (data: string) => void;
 };
 
 export interface ClientToServerEvents {
     testServer: (data: string) => void;
-    uiSide: () => void;
+    from_device: (data: string) => void;
+    from_ui: (data: string) => void;
 };
 
 export interface InterServerEvents {
