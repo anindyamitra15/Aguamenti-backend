@@ -11,7 +11,11 @@ import User from "../models/user.model";
 const socketTokenAuth = async (socket: Socket<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>, next: (err?: ExtendedError | undefined) => void) => {
     try {
         let token = socket.handshake.headers.authorization as string;
-        token = token.split(" ")[1];
+        token = token.split(" ")[1] as string;
+        if (!token) {
+            next(new Error("No token"));
+            return;
+        }
         const decoded = jwt.verify(
             token,
             jwt_secret
