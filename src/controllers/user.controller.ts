@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { AllHousesDto, UserChngPassDto, UserLoginDto, UserRegisterDto } from "../dtos/user.dtos";
+import { AddHouseDto, AllHousesDto, RemoveHouseDto, UserChngPassDto, UserLoginDto, UserRegisterDto } from "../dtos/user.dtos";
 import generateResponse from "../httpresponsecreater";
 import * as UserServices from '../services/user.service';
 
@@ -33,11 +33,29 @@ export const ChangePassword = async (req: Request, res: Response) => {
 };
 
 export const AddHouse = async (req: Request, res: Response) => {
-    return generateResponse(res);
+    const data: AddHouseDto = {
+        owner_id: req.body.user._id,
+        house_id: req.body.house_id,
+        user_id: req.body.user_id,
+        email: req.body.email
+    };
+    if (!data.house_id || (!data.user_id && !data.email))
+        return generateResponse(res, 400);
+    const { code, message, result } = await UserServices.AddHouse(data);
+    return generateResponse(res, code, result, message);
 };
 
 export const RemoveHouse = async (req: Request, res: Response) => {
-    return generateResponse(res);
+    const data: RemoveHouseDto = {
+        owner_id: req.body.user._id,
+        house_id: req.body.house_id,
+        user_id: req.body.user_id,
+        email: req.body.email
+    };
+    if (!data.house_id || (!data.user_id && !data.email))
+        return generateResponse(res, 400);
+    const { code, message, result } = await UserServices.RemoveHouse(data);
+    return generateResponse(res, code, result, message);
 };
 
 export const EmailExists = async (req: Request, res: Response) => {
@@ -48,6 +66,6 @@ export const AllHouses = async (req: Request, res: Response) => {
     const data: AllHousesDto = {
         user_id: req.body.user._id
     };
-    const {code, message, result} = await UserServices.AllHouses(data);
+    const { code, message, result } = await UserServices.AllHouses(data);
     return generateResponse(res, code, result, message);
 };
