@@ -43,13 +43,14 @@ document.getElementById("connect").addEventListener("click", function (e) {
     const url = String(document.getElementById('uri').value);
     const token = String(document.getElementById('token').value);
     const ep = String(document.getElementById('endpoint').value);
+    socket?.disconnect();
     socket = io(url, {
-        extraHeaders: { authorization: `Bearer ${token}` }
+        extraHeaders: { authorization: `Bearer ${token}` },
+        query: { ep }
     });
 
     socket.on("connect", () => {
         document.getElementById('main-section').innerHTML = `<p id="socket-id">Socket ID: ${socket.id}</p><p id="socket-data"></p>`;
-        socket.emit("subscribe", {ep});
         renderControlPanel(true);
     });
 
