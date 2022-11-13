@@ -65,7 +65,7 @@ export const UpdateDevice = async (data: UpdateDeviceDto): Promise<GenericRespon
 
         if (data.name) findDevice.name = data.name;
         if (data.chip_id) findDevice.chip_id = data.chip_id;
-        if(data.device_type) findDevice.device_type = data.device_type;
+        if (data.device_type) findDevice.device_type = data.device_type;
         if (data.house_id) {
             const findHouse = await House.findOne({ _id: data.house_id, owner_id: data.owner_id });
             if (findHouse) {
@@ -76,7 +76,14 @@ export const UpdateDevice = async (data: UpdateDeviceDto): Promise<GenericRespon
         }
 
         await findDevice.save();
-        return { code: 200, result: { name: data.name, device_id: findDevice._id, house }, message: updateLog };
+        return {
+            code: 200, result: {
+                name: data.name,
+                device_id: findDevice._id,
+                house,
+                device_type: findDevice.device_type
+            }, message: updateLog
+        };
     } catch (error) {
         console.log(error);
         return { code: 500, message: error as string };

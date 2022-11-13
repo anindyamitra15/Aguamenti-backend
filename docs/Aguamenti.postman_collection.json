@@ -1456,7 +1456,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"AKM's ESP with scratched shield\",\r\n    \"chip_id\": \"1387420\",\r\n    \"house_id\": \"6358db4bff2696cdad866be1\"\r\n}",
+							"raw": "{\r\n    \"name\": \"AKM's New Device for device_type\",\r\n    \"chip_id\": \"9999666\",\r\n    \"house_id\": \"6358db4bff2696cdad866be1\",\r\n    \"device_type\": \"slider\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1482,7 +1482,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"2nd Nov first device\",\r\n    \"chip_id\": 34748939,\r\n    \"house_id\": \"636254ca1d68190b44dcbf8e\"\r\n}",
+									"raw": "{\r\n    \"name\": \"AKM's New Device for device_type\",\r\n    \"chip_id\": \"9999666\",\r\n    \"house_id\": \"6358db4bff2696cdad866be1\",\r\n    \"device_type\": \"slider\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1522,11 +1522,11 @@
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"5a-IuFRb4k2JBgYjpb2qIYepCrDXU4\""
+									"value": "W/\"5a-gifToorOqk/5fyu5aQkdJZczueg\""
 								},
 								{
 									"key": "Date",
-									"value": "Wed, 02 Nov 2022 12:17:22 GMT"
+									"value": "Sun, 13 Nov 2022 12:16:52 GMT"
 								},
 								{
 									"key": "Connection",
@@ -1538,7 +1538,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": 201,\n    \"message\": \"Device created!\",\n    \"result\": {\n        \"device_id\": \"63625fd27e2b6013019f09e0\"\n    }\n}"
+							"body": "{\n    \"code\": 201,\n    \"message\": \"Device created!\",\n    \"result\": {\n        \"device_id\": \"6370e0347e3e9c4e15ac1094\"\n    }\n}"
 						},
 						{
 							"name": "device exists",
@@ -1758,7 +1758,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"chip_id\": \"34748938\",\r\n    \"name\": \"2nd Nov first device (updated)\",\r\n    \"house_id\": \"636254ca1d68190b44dcbf8e\"\r\n}",
+							"raw": "{\r\n    \"chip_id\": \"9999666\",\r\n    \"name\": \"13th Nov first device (updated)\",\r\n    \"house_id\": \"6358db4bff2696cdad866be1\",\r\n    \"device_type\": \"slider\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1777,71 +1777,6 @@
 						}
 					},
 					"response": [
-						{
-							"name": "success",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\r\n    \"chip_id\": \"34748939\",\r\n    \"name\": \"2nd Nov first device (updated)\",\r\n    \"house_id\": \"636254ca1d68190b44dcbf8e\"\r\n}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "{{base_url}}/device/update",
-									"host": [
-										"{{base_url}}"
-									],
-									"path": [
-										"device",
-										"update"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": [
-								{
-									"key": "X-Powered-By",
-									"value": "Express"
-								},
-								{
-									"key": "Access-Control-Allow-Origin",
-									"value": "*"
-								},
-								{
-									"key": "Content-Type",
-									"value": "application/json; charset=utf-8"
-								},
-								{
-									"key": "Content-Length",
-									"value": "157"
-								},
-								{
-									"key": "ETag",
-									"value": "W/\"9d-HdS71yY8yqyXHxrWZbBRt1JQLxQ\""
-								},
-								{
-									"key": "Date",
-									"value": "Sat, 05 Nov 2022 08:08:27 GMT"
-								},
-								{
-									"key": "Connection",
-									"value": "keep-alive"
-								},
-								{
-									"key": "Keep-Alive",
-									"value": "timeout=5"
-								}
-							],
-							"cookie": [],
-							"body": "{\n    \"code\": 200,\n    \"message\": \"Device updated\",\n    \"result\": {\n        \"name\": \"2nd Nov first device (updated)\",\n        \"device_id\": \"63625fd27e2b6013019f09e0\",\n        \"house\": \"2nd Nov House AKM\"\n    }\n}"
-						},
 						{
 							"name": "device inexistent",
 							"originalRequest": {
@@ -1906,6 +1841,71 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"code\": 404,\n    \"message\": \"No such device\"\n}"
+						},
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"chip_id\": \"9999666\",\r\n    \"name\": \"13th Nov first device (updated)\",\r\n    \"house_id\": \"6358db4bff2696cdad866be1\",\r\n    \"device_type\": \"slider\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/device/update",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"device",
+										"update"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "181"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"b5-yfKt5wUL2wPb2fx3GA7hr4tImG0\""
+								},
+								{
+									"key": "Date",
+									"value": "Sun, 13 Nov 2022 12:19:31 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"Device updated\",\n    \"result\": {\n        \"name\": \"13th Nov first device (updated)\",\n        \"device_id\": \"6370e0347e3e9c4e15ac1094\",\n        \"house\": \"AKM's first house\",\n        \"device_type\": \"slider\"\n    }\n}"
 						}
 					]
 				},
