@@ -2,15 +2,14 @@ import { Server, Socket } from "socket.io";
 import { ClientToServerEvents, InterServerEvents, ServerToClientEvents, SocketData } from "../dtos/socket.io.dtos";
 
 
-export function socketConnection(io: Server) {
-    return (socket: Socket<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>) => {
-        console.log(`${socket.data.type} with ID:`, socket.id, "connected");
+export function socketConnection(socket: Socket<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>) {
+    console.log(`${socket.data.type} with ID:`, socket.id, "connected");
 
-        socket.on("disconnect", onDisconnection(socket));
-        socket.on("testServer", onTestServer(socket));
-        socket.on("from_device", FromDeviceHandler(io, socket));
-        socket.on("from_ui", FromUIHandler(io, socket));
-    };
+    socket.on("disconnect", onDisconnection(socket));
+    socket.on("testServer", onTestServer(socket));
+    socket.on("from_device", FromDeviceHandler(socket));
+    socket.on("from_ui", FromUIHandler(socket));
+    socket.on("subscribe", OnSubscribe(socket));
 }
 
 
@@ -26,14 +25,21 @@ const onTestServer = (socket: Socket) => {
     };
 };
 
-const FromDeviceHandler = (io: Server, socket: Socket) => {
+const FromDeviceHandler = (socket: Socket) => {
     return (data: string) => {
-        socket.broadcast.emit("to_ui", data);
+        socket.broadcast.to("492fwgrlr7").emit("to_ui", data);
     };
 };
 
-const FromUIHandler = (io: Server, socket: Socket) => {
+const FromUIHandler = (socket: Socket) => {
     return (data: string) => {
-        socket.broadcast.emit("to_device", data);
+        socket.broadcast.to("492fwgrlr7").emit("to_device", data);
+    };
+};
+
+const OnSubscribe = (socket: Socket) => {
+    return (data: { ep: string }) => {
+        console.log("Joined endpoint:", data.ep);
+        socket.join(data.ep);
     };
 };

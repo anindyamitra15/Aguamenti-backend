@@ -1,5 +1,4 @@
 let socket = null;
-let intervalEvent = null;
 
 renderControlPanel(false);
 
@@ -26,6 +25,7 @@ function validateUrl() {
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('uri').value = localStorage.getItem('url');
     document.getElementById('token').value = localStorage.getItem('token');
+    document.getElementById('endpoint').value = localStorage.getItem('endpoint');
 
     validateUrl();
 
@@ -42,27 +42,24 @@ document.getElementById("connect").addEventListener("click", function (e) {
     e.preventDefault();
     const url = String(document.getElementById('uri').value);
     const token = String(document.getElementById('token').value);
+    const ep = String(document.getElementById('endpoint').value);
     socket = io(url, {
         extraHeaders: { authorization: `Bearer ${token}` }
     });
 
     socket.on("connect", () => {
-        document.getElementById('main-section').innerHTML = `<p id="socket-id">Socket ID: ${socket.id}</p><p id="socket-data"></p>`
+        document.getElementById('main-section').innerHTML = `<p id="socket-id">Socket ID: ${socket.id}</p><p id="socket-data"></p>`;
+        socket.emit("subscribe", {ep});
         renderControlPanel(true);
     });
 
     socket.on("disconnect", () => {
-        clearInterval(intervalEvent);
         document.getElementById('disconnect').hidden = true;
         alert('Socket connection dropped');
         document.getElementById('main-section').removeChild(document.getElementById('socket-id'));
         renderControlPanel(false);
     });
-    // i = 0;
-    // intervalEvent = setInterval(() => {
-    //     socket.emit("testServer", `Hi Server - ${i}`);
-    //     i++;
-    // }, 4000);
+
 
     socket.on("testClient", data => {
         document.getElementById('socket-data').innerHTML = data;
@@ -76,6 +73,7 @@ document.getElementById("connect").addEventListener("click", function (e) {
 
     localStorage.setItem('url', url);
     localStorage.setItem('token', token);
+    localStorage.setItem('endpoint', ep);
     document.getElementById('disconnect').hidden = false;
 
     alert("Connected to Socket");
