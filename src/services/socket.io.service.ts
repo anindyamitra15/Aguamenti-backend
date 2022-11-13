@@ -6,16 +6,20 @@ type TypedSocket = Socket<ClientToServerEvents, ServerToClientEvents, InterServe
 export function socketConnection(socket: TypedSocket) {
     console.log(`${socket.data.type} with ID:`, socket.id, "connected");
 
+    socket.join(socket.data.endpoint as string);
+    console.log("Joined endpoint:", socket.data.endpoint);
+
     socket.on("disconnect", onDisconnection(socket));
     socket.on("testServer", onTestServer(socket));
     socket.on("from_device", FromDeviceHandler(socket));
     socket.on("from_ui", FromUIHandler(socket));
-    socket.on("subscribe", OnSubscribe(socket));
 }
 
 
 const onDisconnection = (socket: TypedSocket) => {
     return () => {
+        socket.leave(socket.data.endpoint as string);
+        console.log("Left endpoint:", socket.data.endpoint);
         console.log(`Disconnected ${socket.data.type} from ${socket.id}`);
     };
 };
@@ -28,21 +32,12 @@ const onTestServer = (socket: TypedSocket) => {
 
 const FromDeviceHandler = (socket: TypedSocket) => {
     return (data: string) => {
-        socket.broadcast.to("492fwgrlr7").emit("to_ui", data);
+        socket.broadcast.to(socket.data.endpoint as string).emit("to_ui", data);
     };
 };
 
 const FromUIHandler = (socket: TypedSocket) => {
     return (data: string) => {
         socket.broadcast.to(socket.data.endpoint as string).emit("to_device", data);
-    };
-};
-const OnSubscribe = (socket: TypedSocket) => {
-    return (data: { ep: string }) => {
-        if (data.ep) {
-            console.log("Joined endpoint:", data.ep);
-            socket.join(data.ep);
-            socket.data.endpoint = data.ep;
-        }
     };
 };

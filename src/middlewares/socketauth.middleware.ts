@@ -9,6 +9,7 @@ import User from "../models/user.model";
 
 const socketTokenAuth = async (socket: Socket<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>, next: (err?: ExtendedError | undefined) => void) => {
     try {
+        const endpoint: string = socket.handshake.query.ep as string;
         let token = socket.handshake.headers.authorization as string;
         token = token.split(" ")[1] as string;
         if (!token) {
@@ -56,9 +57,9 @@ const socketTokenAuth = async (socket: Socket<ClientToServerEvents, ServerToClie
                 _id: findDevice._id,
                 chip_id: findDevice.chip_id
             };
-
         }
 
+        socket.data.endpoint = endpoint;
 
         next();
 
