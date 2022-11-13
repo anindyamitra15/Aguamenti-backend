@@ -2,7 +2,6 @@ import { ChangeOwnerDto, CreateHouseDto, DeleteHouseDto, AddDeviceToHouseDto, Up
 import { GenericResponse } from "../dtos/response.dtos";
 import House from "../models/house.model";
 import User from "../models/user.model";
-import Randomstring from "randomstring";
 import Device from "../models/device.model";
 
 export const CreateHouse = async (house: CreateHouseDto): Promise<GenericResponse> => {
@@ -10,12 +9,8 @@ export const CreateHouse = async (house: CreateHouseDto): Promise<GenericRespons
         const findUser = await User.findOne({ _id: house.owner_id });
         const findHouse = await House.findOne({ name: house.name, owner_id: house.owner_id });
         if (findHouse) return { code: 400, message: "House Exists" };
-        const endpoint = Randomstring.generate({
-            length: 10,
-            charset: 'alphanumeric',
-            capitalization: 'lowercase'
-        });
-        const newHouse = new House({ name: house.name, owner_id: house.owner_id, endpoint });
+        
+        const newHouse = new House({ name: house.name, owner_id: house.owner_id });
         findUser?.house_ids?.push(newHouse._id);
         await findUser?.save();
         await newHouse.save();

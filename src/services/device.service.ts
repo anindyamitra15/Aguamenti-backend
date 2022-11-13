@@ -18,6 +18,7 @@ export const Create = async (data: CreateDeviceDto): Promise<GenericResponse> =>
             name: data.name,
             chip_id: data.chip_id,
             house_id: data.house_id,
+            device_type: data.device_type
         });
         await newDevice.save();
         return { code: 201, result: { device_id: newDevice._id }, message: "Device created!" };
@@ -64,6 +65,7 @@ export const UpdateDevice = async (data: UpdateDeviceDto): Promise<GenericRespon
 
         if (data.name) findDevice.name = data.name;
         if (data.chip_id) findDevice.chip_id = data.chip_id;
+        if(data.device_type) findDevice.device_type = data.device_type;
         if (data.house_id) {
             const findHouse = await House.findOne({ _id: data.house_id, owner_id: data.owner_id });
             if (findHouse) {
