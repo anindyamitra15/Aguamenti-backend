@@ -10,7 +10,7 @@ export interface ClientToServerEvents {
     testServer: (data: string) => void;
     from_device: (data: string) => void;
     from_ui: (data: string) => void;
-    subscribe: (param: {ep: string}) => void;
+    subscribe: (param: { ep: string }) => void;
 };
 
 export interface InterServerEvents {
@@ -18,9 +18,10 @@ export interface InterServerEvents {
 };
 
 export interface SocketData {
+    endpoint: string,
     user: {
         _id: Types.ObjectId,
-        email: string
+        email: string,
     },
     device: {
         _id: Types.ObjectId,
