@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import { Types } from "mongoose";
 import { Socket } from "socket.io";
 import { ExtendedError } from "socket.io/dist/namespace";
 import { ClientToServerEvents, InterServerEvents, ServerToClientEvents, SocketData } from "../dtos/socket.io.dtos";

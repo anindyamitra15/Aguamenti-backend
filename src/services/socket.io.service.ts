@@ -1,6 +1,6 @@
 import { Server, Socket } from "socket.io";
 import { ClientToServerEvents, InterServerEvents, ServerToClientEvents, SocketData } from "../dtos/socket.io.dtos";
-let intervalObj: any = null;
+
 
 export function socketConnection(io: Server) {
     return (socket: Socket<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>) => {
@@ -10,12 +10,6 @@ export function socketConnection(io: Server) {
         socket.on("testServer", onTestServer(socket));
         socket.on("from_device", FromDeviceHandler(io, socket));
         socket.on("from_ui", FromUIHandler(io, socket));
-
-        // let i = 0;
-        // intervalObj = setInterval(() => {
-        //     socket.emit("testClient", `Hi Client! - ${i}`);
-        //     i++;
-        // }, 3000);
     };
 }
 
@@ -23,24 +17,23 @@ export function socketConnection(io: Server) {
 const onDisconnection = (socket: Socket) => {
     return () => {
         console.log(`Disconnected ${socket.data.type} from ${socket.id}`);
-        // if (intervalObj !== null) clearInterval(intervalObj);
     };
 };
 
 const onTestServer = (socket: Socket) => {
     return (data: string) => {
-        console.log(data)
+        console.log(data);
     };
 };
 
 const FromDeviceHandler = (io: Server, socket: Socket) => {
     return (data: string) => {
-        io.emit("to_ui", data);
+        socket.broadcast.emit("to_ui", data);
     };
 };
 
 const FromUIHandler = (io: Server, socket: Socket) => {
     return (data: string) => {
-        io.emit("to_device", data);
+        socket.broadcast.emit("to_device", data);
     };
 };

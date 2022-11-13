@@ -47,7 +47,7 @@ document.getElementById("connect").addEventListener("click", function (e) {
     });
 
     socket.on("connect", () => {
-        document.getElementById('main-section').innerHTML = `<p id="socket-id">${socket.id}</p><p id="socket-data"></p>`
+        document.getElementById('main-section').innerHTML = `<p id="socket-id">Socket ID: ${socket.id}</p><p id="socket-data"></p>`
         renderControlPanel(true);
     });
 

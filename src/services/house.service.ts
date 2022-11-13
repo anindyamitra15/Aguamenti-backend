@@ -3,7 +3,6 @@ import { GenericResponse } from "../dtos/response.dtos";
 import House from "../models/house.model";
 import User from "../models/user.model";
 import Randomstring from "randomstring";
-import { Types } from "mongoose";
 import Device from "../models/device.model";
 
 export const CreateHouse = async (house: CreateHouseDto): Promise<GenericResponse> => {
