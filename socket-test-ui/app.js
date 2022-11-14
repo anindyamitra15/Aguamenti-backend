@@ -69,6 +69,9 @@ document.getElementById("connect").addEventListener("click", function (e) {
     socket.on('to_ui', (data) => {
         console.log(data);
         document.getElementById('from_device').innerText = data;
+        if (data.state != null || data.state != undefined) {
+            document.getElementById('pump').checked = data.state;
+        }
     });
 
 
@@ -97,3 +100,13 @@ function renderControlPanel(x) {
     document.getElementById('ctrl').hidden = !(x === true);
 }
 
+
+document.getElementById('pump').addEventListener(
+    'click',
+    () => {
+        let value = Boolean(document.getElementById('pump').checked)
+        console.log(value)
+
+        socket.emit("from_ui", { state: value })
+    }
+)
