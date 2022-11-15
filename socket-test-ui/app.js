@@ -68,7 +68,7 @@ document.getElementById("connect").addEventListener("click", function (e) {
 
     socket.on('to_ui', (data) => {
         console.log(data);
-        document.getElementById('from_device').innerText = data;
+        document.getElementById('from_device').innerText = data.value;
         if (data.state != null || data.state != undefined) {
             document.getElementById('pump').checked = data.state;
         }

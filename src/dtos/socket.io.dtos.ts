@@ -2,14 +2,14 @@ import { Types } from "mongoose";
 
 export interface ServerToClientEvents {
     testClient: (data: string) => void;
-    to_device: (data: string) => void;
-    to_ui: (data: string) => void;
+    to_device: (data: any) => void;
+    to_ui: (data: any) => void;
 };
 
 export interface ClientToServerEvents {
     testServer: (data: string) => void;
-    from_device: (data: string) => void;
-    from_ui: (data: string) => void;
+    from_device: (data: any) => void;
+    from_ui: (data: any) => void;
     subscribe: (param: { ep: string }) => void;
 };
 
