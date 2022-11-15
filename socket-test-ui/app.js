@@ -68,9 +68,21 @@ document.getElementById("connect").addEventListener("click", function (e) {
 
     socket.on('to_ui', (data) => {
         console.log(data);
-        document.getElementById('from_device').innerText = data.value;
+        if (data.chip_id)
+            document.getElementById('chip_id').innerText = data.chip_id;
+        if (data.value != null || data.value != undefined) {
+            document.getElementById('from_device').innerText = data.value;
+
+        }
         if (data.state != null || data.state != undefined) {
             document.getElementById('pump').checked = data.state;
+        }
+
+        if (data.pump_enable != null || data.pump_enable != undefined) {
+            if (data.pump_enable == false) {
+                socket.emit("from_ui", { state: false });
+                document.getElementById('pump').checked = false;
+            }
         }
     });
 

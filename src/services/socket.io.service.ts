@@ -32,12 +32,14 @@ const onTestServer = (socket: TypedSocket) => {
 
 const FromDeviceHandler = (socket: TypedSocket) => {
     return (data: any) => {
+        console.log("from_device", data);
         socket.broadcast.to(socket.data.endpoint as string).emit("to_ui", data);
     };
 };
 
 const FromUIHandler = (socket: TypedSocket) => {
     return (data: any) => {
+        console.log("from_ui", data);
         socket.broadcast.to(socket.data.endpoint as string).emit("to_device", data);
     };
 };

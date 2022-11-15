@@ -9,9 +9,10 @@ interface DeviceInterface extends Document {
     name: string,
     chip_id: string,
     state?: boolean,
-    value?: any, //TODO: check if any restrictions can be applied
+    value?: any, //TODO: check if any restrictions should be applied
     house_id?: Types.ObjectId,
-    device_type?: DeviceType
+    device_type?: DeviceType,
+    // pump_id?: Types.ObjectId
 };
 
 const DeviceSchema: Schema<DeviceInterface> = new Schema(
@@ -26,6 +27,7 @@ const DeviceSchema: Schema<DeviceInterface> = new Schema(
         state: { type: Boolean },
         value: { type: Schema.Types.Mixed },
         house_id: { type: Schema.Types.ObjectId, ref: 'House' },
+        // pump_id: { type: Schema.Types.ObjectId, ref: 'Device' }
     },
     {
         timestamps: true
