@@ -5,7 +5,7 @@ renderControlPanel(false);
 function validateUrl() {
     const value = String(document.getElementById('uri').value);
     if (
-        value.search("http://") != -1 &&
+        (value.search("https://") != -1 || value.search("http://") != -1) &&
         value[value.length - 1] === '/' &&
         value[value.length - 2] !== '/'
     ) {
