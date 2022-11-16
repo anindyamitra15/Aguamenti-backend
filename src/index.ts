@@ -21,7 +21,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/user", UserRouter);
 app.use("/house", HouseRouter);
 app.use("/device", DeviceRouter);
-app.use('/static', express.static(path.join(__dirname, 'public')));
+console.log("Here is the path")
+console.log(path.join(__dirname, '../public'));
+app.use('/static', express.static(path.join(__dirname, '../public')));
 
 app.get("/", async (_, res) => {
     res.send(`Server running since ${serverStartTime.toLocaleString()}`);
