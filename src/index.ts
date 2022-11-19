@@ -1,5 +1,6 @@
 import { node_env, port, socket_admin } from './envparser';
 import cors from 'cors';
+import path from 'path';
 import express from 'express';
 import dbconnect from './dbconnect';
 import UserRouter from './routes/user.route';
@@ -10,7 +11,6 @@ import { instrument } from '@socket.io/admin-ui';
 import socketTokenAuth from './middlewares/socketauth.middleware';
 import { socketConnection } from './services/socket.io.service';
 import { ClientToServerEvents, InterServerEvents, ServerToClientEvents, SocketData } from './dtos/socket.io.dtos';
-
 const serverStartTime = new Date();
 
 const app = express();
@@ -18,10 +18,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
 app.use("/user", UserRouter);
 app.use("/house", HouseRouter);
 app.use("/device", DeviceRouter);
+app.use('/static', express.static(path.join(__dirname, '../public')));
 
 app.get("/", async (_, res) => {
     res.send(`Server running since ${serverStartTime.toLocaleString()}`);

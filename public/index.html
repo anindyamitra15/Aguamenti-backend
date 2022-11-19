@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Socket Tester HTML</title>
+    <script src="https://cdn.socket.io/4.5.3/socket.io.min.js"
+        integrity="sha384-WPFUvHkB1aHA5TDSZi6xtDgkF0wXJcIIxXhC6h8OT8EH3fC5PWro5pWJ1THjcfEi"
+        crossorigin="anonymous"></script>
+    <script src="app.js" defer></script>
+</head>
+
+<body>
+    <center>
+        <h1>Socket Tester for Aguamenti</h1>
+    </center>
+    <form>
+        <label for="uri">URL:</label>
+        <input id="uri" name="uri" type="text" placeholder="Type the URL here">
+        <br><br>
+        <label for="token">User Token:</label>
+        <input id="token" name="token" type="text" placeholder="Place the token here">
+        <br><br>
+        <label for="endpoint">House Endpoint:</label>
+        <input id="endpoint" name="endpoint" type="text" placeholder="Place the house's endpoint here">
+        <br><br>
+        <input type="submit" value="Connect" id="connect"></input>
+        <span id="output">The output</span>
+    </form>
+    <br>
+    <button id="disconnect">Disconnect</button>
+
+    <section id="main-section"></section>
+    <section id="ctrl">
+        <label for="value">Send To Device: </label>
+        <input id="from_ui" name="value" type="text"><br>
+        <div>Chip ID: <span id="chip_id"></span></div>
+        <label for="pump">Pump state: </label>
+        <input type="checkbox" name="pump" id="pump"><br>
+        <span>Water Level: <span id="from_device"></span></span>
+    </section>
+</body>
+
+</html>
