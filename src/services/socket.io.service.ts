@@ -1,5 +1,6 @@
 import { Server, Socket } from "socket.io";
-import { ClientToServerEvents, InterServerEvents, ServerToClientEvents, SocketData } from "../dtos/socket.io.dtos";
+import { ClientToServerEvents, DevicePacket, InterServerEvents, ServerToClientEvents, SocketData, UIPacket } from "../dtos/socket.io.dtos";
+import Device from "../models/device.model";
 
 type TypedSocket = Socket<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>
 
@@ -31,15 +32,58 @@ const onTestServer = (socket: TypedSocket) => {
 };
 
 const FromDeviceHandler = (socket: TypedSocket) => {
-    return (data: any) => {
-        console.log("from_device", data);
-        socket.broadcast.to(socket.data.endpoint as string).emit("to_ui", data);
+    return async (data: DevicePacket) => {
+        try {
+            const _id = socket.data.device?._id;
+            const findDevice = await Device.findOne({ _id });
+            console.log("from_device:", data);
+            if (!findDevice) return;
+
+            if (data.state !== null || data.state !== undefined) findDevice.state = data.state;
+            if (data.value !== null || data.value !== undefined) findDevice.value = data.value;
+
+            if (findDevice.device_type === 'tank_level') {
+                // device-sync
+                socket.broadcast.to(socket.data.endpoint as string).emit("to_device", data);
+            }
+
+            // ui-sync
+            socket.broadcast.to(socket.data.endpoint as string).emit("to_ui", {
+                chip_id: `${socket.data.device?.chip_id}`,
+                state: data.state,
+                value: data.value
+            });
+
+            await findDevice.save();
+        } catch (error) {
+            console.log(error as string);
+        }
     };
 };
 
 const FromUIHandler = (socket: TypedSocket) => {
-    return (data: any) => {
-        console.log("from_ui", data);
-        socket.broadcast.to(socket.data.endpoint as string).emit("to_device", data);
+    return async (data: UIPacket) => {
+        try {
+            const findDevice = await Device.findOne({ chip_id: data.chip_id });
+            console.log("from_ui:", data);
+            if (!findDevice) return;
+
+            if (data.state !== null || data.state !== undefined) findDevice.state = data.state;
+            if (data.value !== null || data.value !== undefined) findDevice.value = data.value;
+
+            // device-sync
+            socket.broadcast.to(socket.data.endpoint as string).emit("to_device", data);
+
+            // ui-sync
+            socket.broadcast.to(socket.data.endpoint as string).emit("to_ui", {
+                chip_id: `${socket.data.device?.chip_id}`,
+                state: data.state,
+                value: data.value
+            });
+
+            await findDevice.save();
+        } catch (error) {
+            console.log(error as string);
+        }
     };
 };

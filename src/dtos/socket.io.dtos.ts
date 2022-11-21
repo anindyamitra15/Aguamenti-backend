@@ -1,16 +1,31 @@
 import { Types } from "mongoose";
 
+export type Value = boolean | number | string;
+
+export interface UIPacket {
+    chip_id: string,
+    state?: boolean,
+    value?: Value
+};
+
+export interface DevicePacket {
+    key?: number,
+    state?: boolean,
+    value?: Value
+};
+
 export interface ServerToClientEvents {
+    to_device: (data: DevicePacket) => void;
+    to_ui: (data: UIPacket) => void;
+
     testClient: (data: string) => void;
-    to_device: (data: any) => void;
-    to_ui: (data: any) => void;
 };
 
 export interface ClientToServerEvents {
+    from_device: (data: DevicePacket) => void;
+    from_ui: (data: UIPacket) => void;
+
     testServer: (data: string) => void;
-    from_device: (data: any) => void;
-    from_ui: (data: any) => void;
-    subscribe: (param: { ep: string }) => void;
 };
 
 export interface InterServerEvents {

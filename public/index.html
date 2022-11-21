@@ -26,6 +26,9 @@
         <label for="endpoint">House Endpoint:</label>
         <input id="endpoint" name="endpoint" type="text" placeholder="Place the house's endpoint here">
         <br><br>
+        <label for="chip_id">Chip Id:</label>
+        <input id="chip_id" name="chip_id" type="text" placeholder="Place the device's chip_id here">
+        <br><br>
         <input type="submit" value="Connect" id="connect"></input>
         <span id="output">The output</span>
     </form>
@@ -39,6 +42,8 @@
         <div>Chip ID: <span id="chip_id"></span></div>
         <label for="pump">Pump state: </label>
         <input type="checkbox" name="pump" id="pump"><br>
+        <label for="sendValue">Value: </label>
+        <input type="range" min="0" max="100" value="50" name="sendValue" id="sendValue"><br>
         <span>Water Level: <span id="from_device"></span></span>
     </section>
 </body>

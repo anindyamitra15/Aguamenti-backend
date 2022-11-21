@@ -1,4 +1,5 @@
 let socket = null;
+let control_chip_id = null;
 
 renderControlPanel(false);
 
@@ -26,6 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById('uri').value = localStorage.getItem('url');
     document.getElementById('token').value = localStorage.getItem('token');
     document.getElementById('endpoint').value = localStorage.getItem('endpoint');
+    document.getElementById('chip_id').value = localStorage.getItem('control_chip_id');
 
     validateUrl();
 
@@ -43,6 +45,7 @@ document.getElementById("connect").addEventListener("click", function (e) {
     const url = String(document.getElementById('uri').value);
     const token = String(document.getElementById('token').value);
     const ep = String(document.getElementById('endpoint').value);
+    control_chip_id = String(document.getElementById('chip_id').value);
     socket?.disconnect();
     socket = io(url, {
         extraHeaders: { authorization: `Bearer ${token}` },
@@ -90,6 +93,7 @@ document.getElementById("connect").addEventListener("click", function (e) {
     localStorage.setItem('url', url);
     localStorage.setItem('token', token);
     localStorage.setItem('endpoint', ep);
+    localStorage.setItem('control_chip_id', control_chip_id);
     document.getElementById('disconnect').hidden = false;
 
     alert("Connected to Socket");
@@ -113,12 +117,21 @@ function renderControlPanel(x) {
 }
 
 
+function onInput() {
+    let state = Boolean(document.getElementById('pump').checked);
+    let value = Number(document.getElementById('sendValue').value);
+    console.log(state, value);
+
+    socket.emit("from_ui", { chip_id: control_chip_id, state, value });
+}
+
 document.getElementById('pump').addEventListener(
     'click',
-    () => {
-        let value = Boolean(document.getElementById('pump').checked)
-        console.log(value)
+    onInput
+);
 
-        socket.emit("from_ui", { state: value })
-    }
-)
+
+document.getElementById('sendValue').addEventListener(
+    'input',
+    onInput
+);
