@@ -24,7 +24,7 @@ app.use("/device", DeviceRouter);
 app.use('/static', express.static(path.join(__dirname, '../public')));
 
 app.get("/", async (_, res) => {
-    res.send(`Server running since ${serverStartTime.toLocaleString()}`);
+    res.send(`Server running since ${serverStartTime}`);
 });
 
 // http server event loop
