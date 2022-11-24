@@ -37,24 +37,28 @@ const onTestServer = (socket: TypedSocket) => {
 const FromDeviceHandler = (socket: TypedSocket) => {
     return async (data: DevicePacket) => {
         try {
+            const epExtract = socket.data.endpoint?.split('/') as string[];
+            const endpoint = epExtract[0] as string;
+            const chip_id = epExtract[1] as string;
+
             const _id = socket.data.device?._id;
             const findDevice = await Device.findOne({ _id });
 
             const id_suffix = data.key as number > 0 ? `${data.key}` : '';
 
-            console.log("from_device:", data);
             if (!findDevice) return;
+            console.log("from_device:", data);
 
             if (data.state !== null || data.state !== undefined) findDevice.state = data.state;
             if (data.value !== null || data.value !== undefined) findDevice.value = data.value;
 
             if (findDevice.device_type === 'tank_level') {
                 // device-sync
-                socket.broadcast.to(socket.data.endpoint as string).emit("device_sync", { ...data });
+                socket.broadcast.to(`${endpoint as string}/${findDevice.pump_chip_id}`).emit("device_sync", { ...data });
             }
 
             // sending to ui
-            socket.broadcast.to(socket.data.endpoint as string).emit("to_ui", {
+            socket.broadcast.to(endpoint as string).emit("to_ui", {
                 chip_id: `${socket.data.device?.chip_id}-${id_suffix}`,
                 state: data.state,
                 value: data.value
@@ -71,8 +75,8 @@ const FromUIHandler = (io: TypedServer, socket: TypedSocket) => {
     return async (data: UIPacket) => {
         try {
             const findDevice = await Device.findOne({ chip_id: data.chip_id });
-            console.log("from_ui:", data);
             if (!findDevice) return;
+            console.log("from_ui:", data);
 
             const chip_id_key = (data.chip_id as string).split('-');
             const num_keys = chip_id_key.length;
@@ -81,12 +85,7 @@ const FromUIHandler = (io: TypedServer, socket: TypedSocket) => {
             if (data.value !== null || data.value !== undefined) findDevice.value = data.value;
 
             // sending to device
-            // socket.broadcast.to(socket.data.endpoint as string).emit("to_device", {
-            //     key: (num_keys > 1) ? (chip_id_key[1] as unknown as number) : 0,
-            //     state: data.state,
-            //     value: data.value
-            // });
-            io.to(findDevice.socket_id as string).emit("to_device", {
+            socket.broadcast.to(`${socket.data.endpoint as string}/${data.chip_id}`).emit("to_device", {
                 key: (num_keys > 1) ? (chip_id_key[1] as unknown as number) : 0,
                 state: data.state,
                 value: data.value

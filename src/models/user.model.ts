@@ -6,7 +6,7 @@ export interface UserInterface extends Document {
     name: string,
     password: string,
     email: string,
-    house_ids?: Array<Types.ObjectId>
+    house_ids?: Array<Types.ObjectId>,
 };
 
 const UserSchema: Schema<UserInterface> = new Schema(

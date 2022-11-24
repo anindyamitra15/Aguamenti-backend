@@ -10,5 +10,6 @@ DeviceRouter.post("/update", AuthorizeUserFromToken, DeviceController.UpdateDevi
 // TODO: filter queries
 DeviceRouter.get("/house-snapshot", AuthorizeUserFromToken, DeviceController.HouseSnapshot);
 DeviceRouter.post("/change-house", DeviceController.ChangeHouse);
+DeviceRouter.post("/link-pump", AuthorizeUserFromToken, DeviceController.LinkPump);
 
 export default DeviceRouter;

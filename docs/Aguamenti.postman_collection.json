@@ -1456,7 +1456,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"AKM's New Device for device_type\",\r\n    \"chip_id\": \"9999666\",\r\n    \"house_id\": \"6358db4bff2696cdad866be1\",\r\n    \"device_type\": \"slider\"\r\n}",
+							"raw": "{\r\n    \"name\": \"New ESP for Water Level\",\r\n    \"chip_id\": \"10450884\",\r\n    \"house_id\": \"6358db4bff2696cdad866be1\",\r\n    \"device_type\": \"tank_level\",\r\n    \"pump_chip_id\": \"10441820\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1604,6 +1604,71 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"code\": 202,\n    \"message\": \"Device already exists\"\n}"
+						},
+						{
+							"name": "water level devoce creation success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"New ESP for Water Level\",\r\n    \"chip_id\": \"10450884\",\r\n    \"house_id\": \"6358db4bff2696cdad866be1\",\r\n    \"device_type\": \"tank_level\",\r\n    \"pump_chip_id\": \"10441820\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/device/create",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"device",
+										"create"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "140"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"8c-85qz4LgqJJhs1qMVdQzVyjz65xU\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 24 Nov 2022 08:45:28 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 201,\n    \"message\": \"Water Level Device created and linked with Pump New ESP for Pump!\",\n    \"result\": {\n        \"device_id\": \"637f2f285742dc440bbc8b5a\"\n    }\n}"
 						}
 					]
 				},
@@ -2012,6 +2077,109 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"code\": 200,\n    \"message\": \"All devices for Anindya\",\n    \"result\": {\n        \"devices\": [\n            {\n                \"_id\": \"63625fd27e2b6013019f09e0\",\n                \"name\": \"2nd Nov first device (updated)\",\n                \"chip_id\": \"34748939\",\n                \"house_id\": \"636254ca1d68190b44dcbf8e\",\n                \"createdAt\": \"2022-11-02T12:17:22.375Z\",\n                \"updatedAt\": \"2022-11-05T08:04:59.516Z\",\n                \"__v\": 0\n            },\n            {\n                \"_id\": \"6362603485bafddb46eabcde\",\n                \"name\": \"2nd Nov second device (updated)\",\n                \"chip_id\": \"34748938\",\n                \"house_id\": \"636254ca1d68190b44dcbf8e\",\n                \"createdAt\": \"2022-11-02T12:19:00.022Z\",\n                \"updatedAt\": \"2022-11-05T08:08:59.898Z\",\n                \"__v\": 0\n            }\n        ]\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Link Pump with Water Level Device",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"chip_id\": \"10450884\",\r\n    \"pump_chip_id\": \"10441820\",\r\n    \"house_id\": \"6358db4bff2696cdad866be1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/device/link-pump",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"device",
+								"link-pump"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Link Pump with Water Level Device",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"chip_id\": \"10450884\",\r\n    \"pump_chip_id\": \"10441820\",\r\n    \"house_id\": \"6358db4bff2696cdad866be1\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/device/link-pump",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"device",
+										"link-pump"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "77"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4d-aSa6CYd/nhrtXdUx09t57rarTqE\""
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 24 Nov 2022 09:00:56 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"New ESP for Water Level linked with New ESP for Pump\"\n}"
 						}
 					]
 				}

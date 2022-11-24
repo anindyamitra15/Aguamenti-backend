@@ -1,4 +1,4 @@
-import { ChangeHouseDto, CreateDeviceDto, HouseSnapshotDto, LoginDto, UpdateDeviceDto } from "../dtos/device.dtos";
+import { ChangeHouseDto, CreateDeviceDto, HouseSnapshotDto, LinkPumpDto, LoginDto, UpdateDeviceDto } from "../dtos/device.dtos";
 import { GenericResponse } from "../dtos/response.dtos";
 import Device from "../models/device.model";
 import House from "../models/house.model";
@@ -14,14 +14,31 @@ export const Create = async (data: CreateDeviceDto): Promise<GenericResponse> =>
         const findDevice = await Device.findOne({ chip_id: data.chip_id });
         if (findDevice) return { code: 202, message: "Device with that id already exists" };
 
+        // if the device is not of type tank_level or if a pump_chip_id is not provided
+        if (data.device_type !== 'tank_level' || !data.pump_chip_id) {
+            const newDevice = new Device({
+                name: data.name,
+                chip_id: data.chip_id,
+                house_id: data.house_id,
+                device_type: data.device_type,
+            });
+            await newDevice.save();
+            return { code: 201, result: { device_id: newDevice._id }, message: "Device created!" };
+        }
+
+        const findPump = await Device.findOne({ chip_id: data.pump_chip_id });
+        // validate that chip's existence in the db
+        if (!findPump) return { code: 404, message: "Pump doesn't exist, device creation failed" };
+
         const newDevice = new Device({
             name: data.name,
             chip_id: data.chip_id,
             house_id: data.house_id,
-            device_type: data.device_type
+            device_type: data.device_type,
+            pump_chip_id: findPump.chip_id
         });
         await newDevice.save();
-        return { code: 201, result: { device_id: newDevice._id }, message: "Device created!" };
+        return { code: 201, result: { device_id: newDevice._id }, message: `Water Level Device created and linked with Pump ${findPump.name}!` };
     } catch (error) {
         console.log(error);
         return { code: 500, message: error as string };
@@ -126,6 +143,32 @@ export const ChangeHouse = async (data: ChangeHouseDto): Promise<GenericResponse
         }
 
         return { code: 200, result: { previous_house_id, new_house_id: findDevice.house_id }, message: `Moved device ${findDevice.name} to new House` };
+    } catch (error) {
+        console.log(error);
+        return { code: 500, message: error as string };
+    }
+};
+
+export const LinkPump = async (data: LinkPumpDto): Promise<GenericResponse> => {
+    try {
+        const findWaterDevice = await Device.findOne({
+            chip_id: data.chip_id,
+            device_type: "tank_level",
+            house_id: data.house_id
+        });
+        if (!findWaterDevice) return { code: 403, message: "Water level device inexistent or no permission" };
+        const findPump = await Device.findOne({
+            chip_id: data.pump_chip_id,
+            device_type: "pump",
+            house_id: data.house_id
+        });
+        if (!findPump) return { code: 403, message: "Pump controller inexistent or no permission" };
+
+        findWaterDevice.pump_chip_id = findPump.chip_id;
+
+        await findWaterDevice.save();
+
+        return { code: 200, message: `${findWaterDevice.name} linked with ${findPump.name}` };
     } catch (error) {
         console.log(error);
         return { code: 500, message: error as string };
