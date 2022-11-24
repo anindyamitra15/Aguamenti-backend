@@ -11,6 +11,7 @@ import { instrument } from '@socket.io/admin-ui';
 import socketTokenAuth from './middlewares/socketauth.middleware';
 import { socketConnection } from './services/socket.io.service';
 import { ClientToServerEvents, InterServerEvents, ServerToClientEvents, SocketData } from './dtos/socket.io.dtos';
+
 const serverStartTime = new Date();
 
 const app = express();
@@ -62,4 +63,4 @@ instrument(io, {
 io.use(socketTokenAuth);
 
 //binding connection callback
-io.on("connection", socketConnection(io));
+io.on("connection", socketConnection);

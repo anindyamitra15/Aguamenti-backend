@@ -1,13 +1,12 @@
 import jwt from "jsonwebtoken";
-import { Socket } from "socket.io";
 import { ExtendedError } from "socket.io/dist/namespace";
-import { ClientToServerEvents, InterServerEvents, ServerToClientEvents, SocketData } from "../dtos/socket.io.dtos";
+import { TypedServer, TypedSocket } from "../dtos/socket.io.dtos";
 import { jwt_secret } from "../envparser";
 import Device from "../models/device.model";
 import User from "../models/user.model";
 
 
-const socketTokenAuth = async (socket: Socket<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>, next: (err?: ExtendedError | undefined) => void) => {
+const socketTokenAuth = async (socket: TypedSocket, next: (err?: ExtendedError | undefined) => void) => {
     try {
         const endpoint: string = socket.handshake.query.ep as string;
         let token = socket.handshake.headers.authorization as string;
@@ -54,6 +53,18 @@ const socketTokenAuth = async (socket: Socket<ClientToServerEvents, ServerToClie
                 return;
             }
 
+            const chip_id_key = (findDevice.chip_id as string).split('-');
+            const num_keys = chip_id_key.length;
+
+            // bootup device sync
+            socket.broadcast
+                .to(`${socket.data.endpoint as string}/${chip_id_key[0]}`)
+                .emit("to_device", {
+                    key: (num_keys > 1) ? (chip_id_key[1] as unknown as number) : 0,
+                    state: findDevice.state,
+                    value: findDevice.value
+                });
+
             socket.data.device = {
                 _id: findDevice._id,
                 chip_id: findDevice.chip_id
@@ -68,6 +79,7 @@ const socketTokenAuth = async (socket: Socket<ClientToServerEvents, ServerToClie
         console.log("Socket Middleware Error", error);
         next(error as ExtendedError);
     }
+
 };
 
 export default socketTokenAuth;
