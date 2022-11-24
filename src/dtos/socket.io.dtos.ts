@@ -16,7 +16,9 @@ export interface DevicePacket {
 
 export interface ServerToClientEvents {
     to_device: (data: DevicePacket) => void;
+    device_sync: (data: DevicePacket) => void;
     to_ui: (data: UIPacket) => void;
+    ui_sync: (data: UIPacket) => void;
 
     testClient: (data: string) => void;
 };
