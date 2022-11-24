@@ -62,4 +62,4 @@ instrument(io, {
 io.use(socketTokenAuth);
 
 //binding connection callback
-io.on("connection", socketConnection);
+io.on("connection", socketConnection(io));

@@ -12,7 +12,7 @@ interface DeviceInterface extends Document {
     value?: any, //TODO: check if any restrictions should be applied
     house_id?: Types.ObjectId,
     device_type?: DeviceType,
-    // pump_id?: Types.ObjectId
+    socket_id?: string,
 };
 
 const DeviceSchema: Schema<DeviceInterface> = new Schema(
@@ -27,7 +27,7 @@ const DeviceSchema: Schema<DeviceInterface> = new Schema(
         state: { type: Boolean },
         value: { type: Schema.Types.Mixed },
         house_id: { type: Schema.Types.ObjectId, ref: 'House' },
-        // pump_id: { type: Schema.Types.ObjectId, ref: 'Device' }
+        socket_id: {type: String}
     },
     {
         timestamps: true

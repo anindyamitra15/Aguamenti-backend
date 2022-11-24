@@ -53,6 +53,9 @@ const socketTokenAuth = async (socket: Socket<ClientToServerEvents, ServerToClie
                 next(new Error("Invalid Device"));
                 return;
             }
+            findDevice.socket_id = socket.id;
+            findDevice.save();
+            
             socket.data.device = {
                 _id: findDevice._id,
                 chip_id: findDevice.chip_id

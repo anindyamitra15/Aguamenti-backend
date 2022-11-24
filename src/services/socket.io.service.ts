@@ -2,18 +2,21 @@ import { Server, Socket } from "socket.io";
 import { ClientToServerEvents, DevicePacket, InterServerEvents, ServerToClientEvents, SocketData, UIPacket } from "../dtos/socket.io.dtos";
 import Device from "../models/device.model";
 
-type TypedSocket = Socket<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>
+type TypedSocket = Socket<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>;
+type TypedServer = Server<ClientToServerEvents, ServerToClientEvents, InterServerEvents, SocketData>;
 
-export function socketConnection(socket: TypedSocket) {
-    console.log(`${socket.data.type} with ID:`, socket.id, "connected");
+export function socketConnection(io: TypedServer) {
+    return function (socket: TypedSocket) {
+        console.log(`${socket.data.type} with ID:`, socket.id, "connected");
 
-    socket.join(socket.data.endpoint as string);
-    console.log("Joined endpoint:", socket.data.endpoint);
+        socket.join(socket.data.endpoint as string);
+        console.log("Joined endpoint:", socket.data.endpoint);
 
-    socket.on("disconnect", onDisconnection(socket));
-    socket.on("testServer", onTestServer(socket));
-    socket.on("from_device", FromDeviceHandler(socket));
-    socket.on("from_ui", FromUIHandler(socket));
+        socket.on("disconnect", onDisconnection(socket));
+        socket.on("testServer", onTestServer(socket));
+        socket.on("from_device", FromDeviceHandler(socket));
+        socket.on("from_ui", FromUIHandler(io, socket));
+    }
 }
 
 
@@ -64,7 +67,7 @@ const FromDeviceHandler = (socket: TypedSocket) => {
     };
 };
 
-const FromUIHandler = (socket: TypedSocket) => {
+const FromUIHandler = (io: TypedServer, socket: TypedSocket) => {
     return async (data: UIPacket) => {
         try {
             const findDevice = await Device.findOne({ chip_id: data.chip_id });
@@ -78,7 +81,12 @@ const FromUIHandler = (socket: TypedSocket) => {
             if (data.value !== null || data.value !== undefined) findDevice.value = data.value;
 
             // sending to device
-            socket.broadcast.to(socket.data.endpoint as string).emit("to_device", {
+            // socket.broadcast.to(socket.data.endpoint as string).emit("to_device", {
+            //     key: (num_keys > 1) ? (chip_id_key[1] as unknown as number) : 0,
+            //     state: data.state,
+            //     value: data.value
+            // });
+            io.to(findDevice.socket_id as string).emit("to_device", {
                 key: (num_keys > 1) ? (chip_id_key[1] as unknown as number) : 0,
                 state: data.state,
                 value: data.value
