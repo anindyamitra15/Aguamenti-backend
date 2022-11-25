@@ -6,7 +6,7 @@ export interface CreateDeviceDto {
     name: string,
     chip_id: string,
     device_type: DeviceType,
-    house_id: Types.ObjectId,
+    house_id?: Types.ObjectId,
     pump_chip_id?: string
 };
 
@@ -19,7 +19,7 @@ export interface LoginDto {
 export interface UpdateDeviceDto {
     name?: string,
     chip_id?: string,
-    device_type: DeviceType,
+    device_type?: DeviceType,
     house_id?: Types.ObjectId,
     owner_id: Types.ObjectId
 };

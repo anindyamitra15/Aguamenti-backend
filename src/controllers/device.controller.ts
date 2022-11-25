@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { Types } from "mongoose";
 import { ChangeHouseDto, CreateDeviceDto, HouseSnapshotDto, LinkPumpDto, LoginDto, UpdateDeviceDto } from "../dtos/device.dtos";
 import generateResponse from "../httpresponsecreater";
 import { DeviceType } from "../models/device.model";
@@ -13,7 +14,7 @@ export const Create = async (req: Request, res: Response) => {
         pump_chip_id: String(req.body.pump_chip_id),
         house_id: req.body.house_id,
     };
-    if (!data.name || !data.chip_id || !data.house_id || !data.device_type)
+    if (!data.name || !data.chip_id || !data.device_type)
         return generateResponse(res, 400);
     // if (data.device_type === 'tank_level' && !data.pump_chip_id)
     //     return generateResponse(res, 400);
@@ -51,8 +52,8 @@ export const UpdateDevice = async (req: Request, res: Response) => {
 
 export const HouseSnapshot = async (req: Request, res: Response) => {
     const data: HouseSnapshotDto = {
-        house_id: req.body.house_id,
-        user_id: req.body.user._id
+        user_id: req.body.user._id,
+        house_id: req.params["house_id"],
     };
     if (!data.house_id) return generateResponse(res, 400);
 
@@ -64,7 +65,9 @@ export const HouseSnapshot = async (req: Request, res: Response) => {
 export const ChangeHouse = async (req: Request, res: Response) => {
     const data: ChangeHouseDto = {
         owner_id: req.body.user._id,
-        house_id: req.body.house_id
+        house_id: req.body.house_id,
+        device_id: req.body.device_id as Types.ObjectId,
+        chip_id: req.body.chip_id as string,
     };
 
     if (!data.house_id) return generateResponse(res, 400);

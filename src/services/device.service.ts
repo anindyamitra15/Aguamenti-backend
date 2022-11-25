@@ -5,15 +5,17 @@ import House from "../models/house.model";
 import jwt from "jsonwebtoken";
 import { jwt_secret } from "../envparser";
 import User from "../models/user.model";
+import { Types } from "mongoose";
 
 export const Create = async (data: CreateDeviceDto): Promise<GenericResponse> => {
     try {
-        const findHouse = await House.findOne({ _id: data.house_id, owner_id: data.owner_id });
-        if (!findHouse) return { code: 403, message: "House doesn't exist or you're not the owner" };
-
         const findDevice = await Device.findOne({ chip_id: data.chip_id });
         if (findDevice) return { code: 202, message: "Device with that id already exists" };
-
+        
+        if (data.house_id !== undefined || data.house_id !== null) {
+            const findHouse = await House.findOne({ _id: data.house_id, owner_id: data.owner_id });
+            if (!findHouse) return { code: 403, message: "House doesn't exist or you're not the owner" };
+        }
         // if the device is not of type tank_level or if a pump_chip_id is not provided
         if (data.device_type !== 'tank_level' || !data.pump_chip_id) {
             const newDevice = new Device({
