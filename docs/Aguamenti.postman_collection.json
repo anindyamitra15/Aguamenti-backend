@@ -531,7 +531,7 @@
 								}
 							]
 						},
-						"method": "DELETE",
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -557,7 +557,7 @@
 						{
 							"name": "success",
 							"originalRequest": {
-								"method": "DELETE",
+								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
@@ -622,7 +622,7 @@
 						{
 							"name": "house doesn't exist",
 							"originalRequest": {
-								"method": "DELETE",
+								"method": "POST",
 								"header": [],
 								"body": {
 									"mode": "raw",
@@ -1061,7 +1061,7 @@
 					]
 				},
 				{
-					"name": "Delete User",
+					"name": "Remove User",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -1994,7 +1994,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"house_id\": \"636254ca1d68190b44dcbf8e\"\r\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2002,13 +2002,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{base_url}}/device/house-snapshot",
+							"raw": "{{base_url}}/device/house-snapshot/636254ca1d68190b44dcbf8e",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
 								"device",
-								"house-snapshot"
+								"house-snapshot",
+								"636254ca1d68190b44dcbf8e"
 							]
 						}
 					},
@@ -2020,7 +2021,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"house_id\": \"636254ca1d68190b44dcbf8e\"\r\n}",
+									"raw": "",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2028,13 +2029,14 @@
 									}
 								},
 								"url": {
-									"raw": "{{base_url}}/device/house-snapshot",
+									"raw": "{{base_url}}/device/house-snapshot/636254ca1d68190b44dcbf8e",
 									"host": [
 										"{{base_url}}"
 									],
 									"path": [
 										"device",
-										"house-snapshot"
+										"house-snapshot",
+										"636254ca1d68190b44dcbf8e"
 									]
 								}
 							},
@@ -2056,15 +2058,15 @@
 								},
 								{
 									"key": "Content-Length",
-									"value": "512"
+									"value": "315"
 								},
 								{
 									"key": "ETag",
-									"value": "W/\"200-QKJ77rERTNgFTy06WGtAtrh2EQ0\""
+									"value": "W/\"13b-RT/nkrKdxshHCaI1s2A5zHAMesM\""
 								},
 								{
 									"key": "Date",
-									"value": "Sat, 05 Nov 2022 08:15:21 GMT"
+									"value": "Fri, 25 Nov 2022 08:39:36 GMT"
 								},
 								{
 									"key": "Connection",
@@ -2076,7 +2078,7 @@
 								}
 							],
 							"cookie": [],
-							"body": "{\n    \"code\": 200,\n    \"message\": \"All devices for Anindya\",\n    \"result\": {\n        \"devices\": [\n            {\n                \"_id\": \"63625fd27e2b6013019f09e0\",\n                \"name\": \"2nd Nov first device (updated)\",\n                \"chip_id\": \"34748939\",\n                \"house_id\": \"636254ca1d68190b44dcbf8e\",\n                \"createdAt\": \"2022-11-02T12:17:22.375Z\",\n                \"updatedAt\": \"2022-11-05T08:04:59.516Z\",\n                \"__v\": 0\n            },\n            {\n                \"_id\": \"6362603485bafddb46eabcde\",\n                \"name\": \"2nd Nov second device (updated)\",\n                \"chip_id\": \"34748938\",\n                \"house_id\": \"636254ca1d68190b44dcbf8e\",\n                \"createdAt\": \"2022-11-02T12:19:00.022Z\",\n                \"updatedAt\": \"2022-11-05T08:08:59.898Z\",\n                \"__v\": 0\n            }\n        ]\n    }\n}"
+							"body": "{\n    \"code\": 200,\n    \"message\": \"All devices for Anindya\",\n    \"result\": {\n        \"devices\": [\n            {\n                \"device_type\": \"switch\",\n                \"_id\": \"6362603485bafddb46eabcde\",\n                \"name\": \"2nd Nov second device (updated)\",\n                \"chip_id\": \"34748938\",\n                \"house_id\": \"636254ca1d68190b44dcbf8e\",\n                \"createdAt\": \"2022-11-02T12:19:00.022Z\",\n                \"updatedAt\": \"2022-11-05T08:08:59.898Z\",\n                \"__v\": 0\n            }\n        ]\n    }\n}"
 						}
 					]
 				},
@@ -2180,6 +2182,174 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"code\": 200,\n    \"message\": \"New ESP for Water Level linked with New ESP for Pump\"\n}"
+						}
+					]
+				},
+				{
+					"name": "ChangeHouse",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"chip_id\": \"11223344\",\r\n    \"device_id\": \"6380a7aa001e2ace81174171\",\r\n    \"house_id\": \"6380a769001e2ace81174168\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/device/change-house",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"device",
+								"change-house"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "no permission",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"chip_id\": \"11223344\",\r\n    \"house_id\": \"6356c583645cde002f036c14\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/device/change-house",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"device",
+										"change-house"
+									]
+								}
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "77"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"4d-TLk79ewNjztRCQS7kwGRutUl/kE\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 25 Nov 2022 11:29:31 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 403,\n    \"message\": \"Insufficient permission or invalid house id provided\"\n}"
+						},
+						{
+							"name": "success",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"chip_id\": \"11223344\",\r\n    \"device_id\": \"6380a7aa001e2ace81174171\",\r\n    \"house_id\": \"6380a769001e2ace81174168\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/device/change-house",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"device",
+										"change-house"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "169"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"a9-RrUX/qzlnJxL1lz/atnwOcPAgjE\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 25 Nov 2022 11:32:31 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"Moved my device to new House\",\n    \"result\": {\n        \"previous_house_id\": \"6358db4bff2696cdad866be1\",\n        \"new_house_id\": \"6380a769001e2ace81174168\"\n    }\n}"
 						}
 					]
 				}
