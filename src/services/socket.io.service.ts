@@ -37,9 +37,8 @@ const FromDeviceHandler = (socket: TypedSocket) => {
             console.log("from_device:", data);
             const epExtract = socket.data.endpoint?.split('/') as string[];
             const endpoint = epExtract[0] as string;
-            const chip_id = epExtract[1] as string;
+            const chip_id = `${epExtract[1] as string}${data.key && data.key > 0 ? `-${data.key}`: ''}`;
 
-            const _id = socket.data.device?._id;
             const findDevice = await Device.findOne({ chip_id });
 
             const id_suffix = data.key as number > 0 ? `-${data.key}` : '';
