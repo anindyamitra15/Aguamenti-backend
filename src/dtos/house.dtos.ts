@@ -5,6 +5,11 @@ export interface CreateHouseDto {
     owner_id: Types.ObjectId
 };
 
+export interface HouseDetailsDto {
+    house_id: Types.ObjectId,
+    user_id: Types.ObjectId
+};
+
 export interface DeleteHouseDto {
     _id: Types.ObjectId,
     owner_id: Types.ObjectId

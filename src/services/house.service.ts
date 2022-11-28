@@ -1,4 +1,4 @@
-import { ChangeOwnerDto, CreateHouseDto, DeleteHouseDto, AddDeviceToHouseDto, UpdateHouseDto, UpdateUserHouseDto, RemoveDeviceFromHouseDto } from "../dtos/house.dtos";
+import { ChangeOwnerDto, CreateHouseDto, DeleteHouseDto, AddDeviceToHouseDto, UpdateHouseDto, UpdateUserHouseDto, RemoveDeviceFromHouseDto, HouseDetailsDto } from "../dtos/house.dtos";
 import { GenericResponse } from "../dtos/response.dtos";
 import House from "../models/house.model";
 import User from "../models/user.model";
@@ -9,12 +9,28 @@ export const CreateHouse = async (house: CreateHouseDto): Promise<GenericRespons
         const findUser = await User.findOne({ _id: house.owner_id });
         const findHouse = await House.findOne({ name: house.name, owner_id: house.owner_id });
         if (findHouse) return { code: 400, message: "House Exists" };
-        
+
         const newHouse = new House({ name: house.name, owner_id: house.owner_id });
         findUser?.house_ids?.push(newHouse._id);
         await findUser?.save();
         await newHouse.save();
         return { code: 200, result: { house_id: newHouse._id }, message: "House created" };
+    } catch (error) {
+        console.log(error);
+        return { code: 500 };
+    }
+};
+
+export const HouseDetails = async (house: HouseDetailsDto): Promise<GenericResponse> => {
+    try {
+        const findUser = await User.findOne({ _id: house.user_id });
+        const number = findUser?.house_ids?.indexOf(house.house_id);
+        if (number === null || number === undefined || number < 0)
+            return { code: 403, message: 'No permission' };
+        const findHouse = await House.findOne({ _id: house.house_id }, { endpoint: 1, name: 1, owner_id: 1 });
+        if (!findHouse) return { code: 400, message: "Invalid house id" };
+
+        return { code: 200, result: { ...findHouse }, message: "House found" };
     } catch (error) {
         console.log(error);
         return { code: 500 };

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { ChangeOwnerDto, CreateHouseDto, DeleteHouseDto, AddDeviceToHouseDto, UpdateHouseDto, UpdateUserHouseDto, RemoveDeviceFromHouseDto } from "../dtos/house.dtos";
+import { ChangeOwnerDto, CreateHouseDto, DeleteHouseDto, AddDeviceToHouseDto, UpdateHouseDto, UpdateUserHouseDto, RemoveDeviceFromHouseDto, HouseDetailsDto } from "../dtos/house.dtos";
 import generateResponse from "../httpresponsecreater";
 import * as HouseService from '../services/house.service';
 
@@ -10,6 +10,16 @@ export const CreateHouse = async (req: Request, res: Response) => {
     };
     if (!house.name) return generateResponse(res, 400, null, "Name is required");
     const { code, message, result } = await HouseService.CreateHouse(house);
+    return generateResponse(res, code, result, message);
+};
+
+export const HouseDetails = async (req: Request, res: Response) => {
+    const house: HouseDetailsDto = {
+        house_id: req.body.house_id,
+        user_id: req.body.user._id
+    };
+    if (!house.house_id) return generateResponse(res, 400, null, "House id is required");
+    const { code, message, result } = await HouseService.HouseDetails(house);
     return generateResponse(res, code, result, message);
 };
 
