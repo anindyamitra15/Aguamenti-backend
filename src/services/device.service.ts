@@ -11,7 +11,7 @@ export const Create = async (data: CreateDeviceDto): Promise<GenericResponse> =>
     try {
         const findDevice = await Device.findOne({ chip_id: data.chip_id });
         if (findDevice) return { code: 202, message: "Device with that id already exists" };
-        
+
         if (data.house_id !== undefined || data.house_id !== null) {
             const findHouse = await House.findOne({ _id: data.house_id, owner_id: data.owner_id });
             if (!findHouse) return { code: 403, message: "House doesn't exist or you're not the owner" };
@@ -114,7 +114,7 @@ export const HouseSnapshot = async (data: HouseSnapshotDto): Promise<GenericResp
     try {
         const findUser = await User.findOne({ _id: data.user_id, house_ids: data.house_id });
         if (!findUser) return { code: 403, message: "Insufficient permissions" };
-        const findDevices = await Device.find({ house_id: data.house_id });
+        const findDevices = await Device.find({ house_id: data.house_id }, { createdAt: 0, updatedAt: 0, __v: 0, house_id: 0, _id: 0 });
         return { code: 200, result: { devices: [...findDevices] }, message: `All devices for ${findUser.name}` };
     } catch (error) {
         console.log(error);
