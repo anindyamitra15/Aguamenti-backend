@@ -5,7 +5,7 @@ import AuthorizeUserFromToken from "../middlewares/tokenauth.middleware";
 const HouseRouter: Router = Router();
 
 HouseRouter.post("/create", AuthorizeUserFromToken, HouseController.CreateHouse);
-HouseRouter.get("/details", AuthorizeUserFromToken, HouseController.HouseDetails);
+HouseRouter.get("/details/:house_id", AuthorizeUserFromToken, HouseController.HouseDetails);
 HouseRouter.post("/delete", AuthorizeUserFromToken, HouseController.DeleteHouse);
 HouseRouter.post("/update", AuthorizeUserFromToken, HouseController.UpdateHouse);
 HouseRouter.post("/change-owner", AuthorizeUserFromToken, HouseController.ChangeOwner);

@@ -15,7 +15,7 @@ export const CreateHouse = async (req: Request, res: Response) => {
 
 export const HouseDetails = async (req: Request, res: Response) => {
     const house: HouseDetailsDto = {
-        house_id: req.body.house_id,
+        house_id: req.params["house_id"] as any,
         user_id: req.body.user._id
     };
     if (!house.house_id) return generateResponse(res, 400, null, "House id is required");
