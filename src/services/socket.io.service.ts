@@ -51,7 +51,7 @@ const FromDeviceHandler = (socket: TypedSocket) => {
             if (findDevice.device_type === 'tank_level') {
                 // device-sync
                 socket.broadcast
-                    .to(`${endpoint as string}/${findDevice.pump_chip_id?.split('-')[0]}`)
+                    .to(`${endpoint as string}/${findDevice.linked_chip_id?.split('-')[0]}`)
                     .emit("device_sync", { ...data });
             }
 

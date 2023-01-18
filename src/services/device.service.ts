@@ -16,8 +16,8 @@ export const Create = async (data: CreateDeviceDto): Promise<GenericResponse> =>
             const findHouse = await House.findOne({ _id: data.house_id, owner_id: data.owner_id });
             if (!findHouse) return { code: 403, message: "House doesn't exist or you're not the owner" };
         }
-        // if the device is not of type tank_level or if a pump_chip_id is not provided
-        if (data.device_type !== 'tank_level' || !data.pump_chip_id) {
+        // if the device is not of type tank_level or if a linked_chip_id is not provided
+        if (data.device_type !== 'tank_level' || !data.linked_chip_id) {
             const newDevice = new Device({
                 name: data.name,
                 chip_id: data.chip_id,
@@ -28,7 +28,7 @@ export const Create = async (data: CreateDeviceDto): Promise<GenericResponse> =>
             return { code: 201, result: { device_id: newDevice._id }, message: "Device created!" };
         }
 
-        const findPump = await Device.findOne({ chip_id: data.pump_chip_id });
+        const findPump = await Device.findOne({ chip_id: data.linked_chip_id });
         // validate that chip's existence in the db
         if (!findPump) return { code: 404, message: "Pump doesn't exist, device creation failed" };
 
@@ -37,7 +37,7 @@ export const Create = async (data: CreateDeviceDto): Promise<GenericResponse> =>
             chip_id: data.chip_id,
             house_id: data.house_id,
             device_type: data.device_type,
-            pump_chip_id: findPump.chip_id
+            linked_chip_id: findPump.chip_id
         });
         await newDevice.save();
         return { code: 201, result: { device_id: newDevice._id }, message: `Tank unit created and linked with Pump ${findPump.name}!` };
@@ -160,13 +160,13 @@ export const LinkPump = async (data: LinkPumpDto): Promise<GenericResponse> => {
         });
         if (!findTankUnit) return { code: 403, message: "Tank unit inexistent or no permission" };
         const findPump = await Device.findOne({
-            chip_id: data.pump_chip_id,
+            chip_id: data.linked_chip_id,
             device_type: "pump",
             house_id: data.house_id
         });
         if (!findPump) return { code: 403, message: "Pump controller inexistent or no permission" };
 
-        findTankUnit.pump_chip_id = findPump.chip_id;
+        findTankUnit.linked_chip_id = findPump.chip_id;
 
         await findTankUnit.save();
 

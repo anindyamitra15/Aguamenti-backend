@@ -1456,7 +1456,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"New ESP for Water Level\",\r\n    \"chip_id\": \"10450884\",\r\n    \"house_id\": \"6358db4bff2696cdad866be1\",\r\n    \"device_type\": \"tank_level\",\r\n    \"pump_chip_id\": \"10441820\"\r\n}",
+							"raw": "{\r\n    \"name\": \"New ESP for Water Level\",\r\n    \"chip_id\": \"10450884\",\r\n    \"house_id\": \"6358db4bff2696cdad866be1\",\r\n    \"device_type\": \"tank_level\",\r\n    \"linked_chip_id\": \"10441820\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1612,7 +1612,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"name\": \"New ESP for Water Level\",\r\n    \"chip_id\": \"10450884\",\r\n    \"house_id\": \"6358db4bff2696cdad866be1\",\r\n    \"device_type\": \"tank_level\",\r\n    \"pump_chip_id\": \"10441820\"\r\n}",
+									"raw": "{\r\n    \"name\": \"New ESP for Water Level\",\r\n    \"chip_id\": \"10450884\",\r\n    \"house_id\": \"6358db4bff2696cdad866be1\",\r\n    \"device_type\": \"tank_level\",\r\n    \"linked_chip_id\": \"10441820\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -2099,7 +2099,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"chip_id\": \"10450884\",\r\n    \"pump_chip_id\": \"10441820\",\r\n    \"house_id\": \"6358db4bff2696cdad866be1\"\r\n}",
+							"raw": "{\r\n    \"chip_id\": \"10450884\",\r\n    \"linked_chip_id\": \"10441820\",\r\n    \"house_id\": \"6358db4bff2696cdad866be1\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2125,7 +2125,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"chip_id\": \"10450884\",\r\n    \"pump_chip_id\": \"10441820\",\r\n    \"house_id\": \"6358db4bff2696cdad866be1\"\r\n}",
+									"raw": "{\r\n    \"chip_id\": \"10450884\",\r\n    \"linked_chip_id\": \"10441820\",\r\n    \"house_id\": \"6358db4bff2696cdad866be1\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
