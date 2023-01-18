@@ -7,7 +7,7 @@ export interface CreateDeviceDto {
     chip_id: string,
     device_type: DeviceType,
     house_id?: Types.ObjectId,
-    pump_chip_id?: string
+    linked_chip_id?: string
 };
 
 
@@ -42,5 +42,5 @@ export interface LinkPumpDto {
     owner_id: Types.ObjectId,
     chip_id: string,
     house_id: Types.ObjectId,
-    pump_chip_id: string
+    linked_chip_id: string
 };
