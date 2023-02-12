@@ -10,6 +10,8 @@ interface DeviceInterface extends Document {
     chip_id: string,
     state?: boolean,
     value?: any, //TODO: check if any restrictions should be applied
+    online: boolean,
+    schedules: [Schedule]
     house_id?: Types.ObjectId,
     device_type?: DeviceType,
     linked_chip_id?: string
@@ -37,4 +39,14 @@ const DeviceSchema: Schema<DeviceInterface> = new Schema(
 
 const Device: Model<DeviceInterface> = model("Device", DeviceSchema);
 
+export interface Schedule{
+    schedule_type: ScheduleType,
+    trigger_type: TriggerType,
+    repeat_on: [WeekDay],
+    end_at: Date    //js built-in date class
+}; 
+
 export default Device;
+export type ScheduleType = "on" | "off" | "dim" | "and" | "or";
+export type TriggerType = "timing" | "device";
+export type WeekDay = "monday" | "tuesday" | "wednesday" | "thursday" | "friday" | "saturday" | "sunday"; // note: I am sure there are alternative to this in-built.
