@@ -3,7 +3,7 @@ import { ScheduleType } from "../models/schedule.model";
 import { TriggerType } from "../models/schedule.model";
 import { WeekDay } from "../models/schedule.model";
 
-export interface CreateSchedule {
+export interface CreateScheduleDto {
     name: string,
     chip_id: string,
     linked_chip_id?: string,
@@ -14,7 +14,7 @@ export interface CreateSchedule {
     _id : Types.ObjectId,
 };
 
-export interface ListSchedule {
+export interface ListScheduleDto {
     name: string,
     chip_id: string,
     linked_chip_id?: string,
@@ -24,13 +24,13 @@ export interface ListSchedule {
     end_at: Date,
 };
 
-export interface DeleteSchedule {
+export interface DeleteScheduleDto {
     name : string,
     chip_id : string,
     _id: Types.ObjectId,
 };
 
-export interface EditSchedule {
+export interface EditScheduleDto {
     name: string,
     chip_id: string,
     linked_chip_id?: string,

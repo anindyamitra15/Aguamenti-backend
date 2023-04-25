@@ -6,11 +6,14 @@ import dbconnect from './dbconnect';
 import UserRouter from './routes/user.route';
 import HouseRouter from './routes/house.route';
 import DeviceRouter from './routes/device.route';
+import ScheduleRouter from './routes/schedule.route';
 import socketio from "socket.io";
 import { instrument } from '@socket.io/admin-ui';
 import socketTokenAuth from './middlewares/socketauth.middleware';
 import { socketConnection } from './services/socket.io.service';
 import { ClientToServerEvents, InterServerEvents, ServerToClientEvents, SocketData } from './dtos/socket.io.dtos';
+
+
 
 const serverStartTime = new Date();
 
@@ -22,6 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/user", UserRouter);
 app.use("/house", HouseRouter);
 app.use("/device", DeviceRouter);
+app.use("/schedule", ScheduleRouter);
 app.use('/static', express.static(path.join(__dirname, '../public')));
 
 app.get("/", async (_, res) => {

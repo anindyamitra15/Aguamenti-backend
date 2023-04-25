@@ -76,16 +76,16 @@ export const ChangeHouse = async (req: Request, res: Response) => {
     return generateResponse(res, code, result, message);
 };
 
-export const LinkPump = async (req: Request, res: Response) => {
-    const data: LinkPumpDto = {
-        owner_id: req.body.user._id,
-        house_id: req.body.house_id,
-        chip_id: String(req.body.chip_id),
-        linked_chip_id: String(req.body.linked_chip_id)
-    };
+// export const LinkPump = async (req: Request, res: Response) => {
+//     const data: LinkPumpDto = {
+//         owner_id: req.body.user._id,
+//         house_id: req.body.house_id,
+//         chip_id: String(req.body.chip_id),
+//         linked_chip_id: String(req.body.linked_chip_id)
+//     };
 
-    if (!data.house_id || !data.chip_id || !data.linked_chip_id) return generateResponse(res, 400);
+//     if (!data.house_id || !data.chip_id || !data.linked_chip_id) return generateResponse(res, 400);
 
-    const { code, message, result } = await DeviceService.LinkPump(data);
-    return generateResponse(res, code, result, message);
-};
+//     const { code, message, result } = await DeviceService.LinkPump(data);
+//     return generateResponse(res, code, result, message);
+// };
