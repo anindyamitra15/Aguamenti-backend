@@ -12,4 +12,5 @@ DeviceRouter.get("/house-snapshot/:house_id", AuthorizeUserFromToken, DeviceCont
 DeviceRouter.post("/change-house", AuthorizeUserFromToken, DeviceController.ChangeHouse);
 DeviceRouter.post("/link-pump", AuthorizeUserFromToken, DeviceController.LinkPump);
 
+
 export default DeviceRouter;

@@ -151,28 +151,28 @@ export const ChangeHouse = async (data: ChangeHouseDto): Promise<GenericResponse
     }
 };
 
-export const LinkPump = async (data: LinkPumpDto): Promise<GenericResponse> => {
-    try {
-        const findTankUnit = await Device.findOne({
-            chip_id: data.chip_id,
-            device_type: "tank_level",
-            house_id: data.house_id
-        });
-        if (!findTankUnit) return { code: 403, message: "Tank unit inexistent or no permission" };
-        const findPump = await Device.findOne({
-            chip_id: data.linked_chip_id,
-            device_type: "pump",
-            house_id: data.house_id
-        });
-        if (!findPump) return { code: 403, message: "Pump controller inexistent or no permission" };
+// export const LinkPump = async (data: LinkPumpDto): Promise<GenericResponse> => {
+//     try {
+//         const findTankUnit = await Device.findOne({
+//             chip_id: data.chip_id,
+//             device_type: "tank_level",
+//             house_id: data.house_id
+//         });
+//         if (!findTankUnit) return { code: 403, message: "Tank unit inexistent or no permission" };
+//         const findPump = await Device.findOne({
+//             chip_id: data.linked_chip_id,
+//             device_type: "pump",
+//             house_id: data.house_id
+//         });
+//         if (!findPump) return { code: 403, message: "Pump controller inexistent or no permission" };
 
-        findTankUnit.linked_chip_id = findPump.chip_id;
+//         findTankUnit.linked_chip_id = findPump.chip_id;
 
-        await findTankUnit.save();
+//         await findTankUnit.save();
 
-        return { code: 200, message: `${findTankUnit.name} linked with ${findPump.name}` };
-    } catch (error) {
-        console.log(error);
-        return { code: 500, message: error as string };
-    }
-};
+//         return { code: 200, message: `${findTankUnit.name} linked with ${findPump.name}` };
+//     } catch (error) {
+//         console.log(error);
+//         return { code: 500, message: error as string };
+//     }
+// };
