@@ -11,23 +11,18 @@ export interface CreateScheduleDto {
     trigger_type?: TriggerType,
     repeat_on?: [WeekDay],
     end_at: Date,
-    _id : Types.ObjectId,
+    user_id : Types.ObjectId,
 };
 
 export interface ListScheduleDto {
-    name: string,
+    user_id : Types.ObjectId,
     chip_id: string,
-    linked_chip_id?: string,
-    schedule_type: ScheduleType,
-    trigger_type?: TriggerType,
-    repeat_on?: [WeekDay],
-    end_at: Date,
 };
 
 export interface DeleteScheduleDto {
     name : string,
     chip_id : string,
-    _id: Types.ObjectId,
+    user_id: Types.ObjectId,
 };
 
 export interface EditScheduleDto {
@@ -35,9 +30,8 @@ export interface EditScheduleDto {
     chip_id: string,
     linked_chip_id?: string,
     schedule_type: ScheduleType,
-    trigger_type?: TriggerType,
     repeat_on?: [WeekDay],
     end_at: Date,
-    _id : Types.ObjectId,
+    user_id : Types.ObjectId,
 };
 
