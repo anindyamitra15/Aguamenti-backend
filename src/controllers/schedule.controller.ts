@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Types } from "mongoose";
-import { CreateScheduleDto, ListScheduleDto, DeleteScheduleDto, EditScheduleDto } from "../dtos/schedule.dtos";
+import { CreateScheduleDto, ListScheduleUsingUserIDDto, ListScheduleUsingDeviceIDDto, ListScheduleUsingLinkedDeviceIDDto, DeleteScheduleDto, EditScheduleDto } from "../dtos/schedule.dtos";
 import generateResponse from "../httpresponsecreater";
 import { ScheduleType } from "../models/schedule.model";
 import { TriggerType } from "../models/schedule.model";
@@ -24,14 +24,33 @@ export const CreateSchedule = async (req: Request, res: Response) => {
     return generateResponse(res, code, result, message);
 };
 
-export const ListSchedules = async (req: Request, res: Response) => {
-    const schedule: ListScheduleDto = {
+export const ListScheduleUsingUserID = async (req: Request, res: Response) => {
+    const schedule: ListScheduleUsingUserIDDto = {
         user_id: req.body.user._id,
-        chip_id: String(req.body.chip_id),
     };
     if (!schedule.user_id)
         return generateResponse(res, 400, "ID required");
-    const { code, message, result } = await ScheduleService.ListSchedule(schedule);
+    const { code, message, result } = await ScheduleService.ListScheduleUsingUserID(schedule);
+    return generateResponse(res, code, result, message);
+};
+
+export const ListScheduleUsingDeviceID = async (req: Request, res: Response) => {
+    const schedule: ListScheduleUsingDeviceIDDto = {
+        chip_id: String(req.body.chip_id),
+    };
+    if (!schedule.chip_id)
+        return generateResponse(res, 400, "Chip ID required");
+    const { code, message, result } = await ScheduleService.ListScheduleUsingDeviceID(schedule);
+    return generateResponse(res, code, result, message);
+};
+
+export const ListScheduleUsingLinkedDeviceID = async (req: Request, res: Response) => {
+    const schedule: ListScheduleUsingLinkedDeviceIDDto = {
+        linked_chip_id: String(req.body.linked_chip_id),
+    };
+    if (!schedule.linked_chip_id)
+        return generateResponse(res, 400, "Linked Chip ID required");
+    const { code, message, result } = await ScheduleService.ListScheduleUsingLinkedDeviceID(schedule);
     return generateResponse(res, code, result, message);
 };
 

@@ -14,11 +14,16 @@ export interface CreateScheduleDto {
     user_id : Types.ObjectId,
 };
 
-export interface ListScheduleDto {
+export interface ListScheduleUsingUserIDDto {
     user_id : Types.ObjectId,
-    chip_id: string,
 };
 
+export interface ListScheduleUsingDeviceIDDto {
+    chip_id: string,
+};
+export interface ListScheduleUsingLinkedDeviceIDDto {
+    linked_chip_id: string,
+};
 export interface DeleteScheduleDto {
     name : string,
     chip_id : string,
