@@ -1,5 +1,5 @@
 import { GenericResponse } from "../dtos/response.dtos";
-import { CreateScheduleDto, DeleteScheduleDto, EditScheduleDto, ListScheduleUsingDeviceIDDto, ListScheduleUsingLinkedDeviceIDDto, ListScheduleUsingUserIDDto } from "../dtos/schedule.dtos";
+import { CreateScheduleDto, DeleteScheduleDto, EditScheduleDto, ListScheduleUnderDeviceDto, ListScheduleUnderLinkedDeviceDto, ListScheduleUnderUserDto, } from "../dtos/schedule.dtos";
 
 export const CreateSchedule = async (schedule: CreateScheduleDto): Promise<GenericResponse> => {
     try {
@@ -11,7 +11,7 @@ export const CreateSchedule = async (schedule: CreateScheduleDto): Promise<Gener
         return { code: 500, message: error as string };
     }
 };
-export const ListScheduleUsingUserID = async (schedule: ListScheduleUsingUserIDDto): Promise<GenericResponse> => {
+export const ListScheduleUnderUser = async (schedule: ListScheduleUnderUserDto): Promise<GenericResponse> => {
     try {
     
         return { code: 200 };
@@ -21,7 +21,7 @@ export const ListScheduleUsingUserID = async (schedule: ListScheduleUsingUserIDD
     }
 };
 
-export const ListScheduleUsingDeviceID = async (schedule: ListScheduleUsingDeviceIDDto): Promise<GenericResponse> => {
+export const ListScheduleUnderDevice = async (schedule: ListScheduleUnderDeviceDto): Promise<GenericResponse> => {
     try {
     
         return { code: 200 };
@@ -31,7 +31,7 @@ export const ListScheduleUsingDeviceID = async (schedule: ListScheduleUsingDevic
     }
 };
 
-export const ListScheduleUsingLinkedDeviceID = async (schedule: ListScheduleUsingLinkedDeviceIDDto): Promise<GenericResponse> => {
+export const ListScheduleUnderLinkedDevice = async (schedule: ListScheduleUnderLinkedDeviceDto): Promise<GenericResponse> => {
     try {
     
         return { code: 200 };
