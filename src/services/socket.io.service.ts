@@ -48,12 +48,12 @@ const FromDeviceHandler = (socket: TypedSocket) => {
             if (data.state !== null || data.state !== undefined) findDevice.state = data.state;
             if (data.value !== null || data.value !== undefined) findDevice.value = data.value;
 
-            if (findDevice.device_type === 'tank_level') {
-                // device-sync
-                socket.broadcast
-                    .to(`${endpoint as string}/${findDevice.linked_chip_id?.split('-')[0]}`)
-                    .emit("device_sync", { ...data });
-            }
+            // if (findDevice.device_type === 'tank_level') {
+            //     // device-sync
+            //     socket.broadcast
+            //         .to(`${endpoint as string}/${findDevice.linked_chip_id?.split('-')[0]}`)
+            //         .emit("device_sync", { ...data });
+            // }
 
             // sending to ui
             socket.broadcast
