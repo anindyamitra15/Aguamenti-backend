@@ -46,6 +46,21 @@ const ScheduleSchema: Schema<ScheduleInterface> = new Schema(
     }
 );
 
+ScheduleSchema.pre<ScheduleInterface>("save", function (next) {
+    if (
+        this.isNew ||
+        this.isModified("schedule_type") ||
+        this.isModified("trigger_type") ||
+        this.isModified("repeat_on") ||
+        this.isModified("end_at")
+    ){
+        //function to convert readable time data to cron string
+        next();
+    }
+    else
+        next();
+});
+
 
 const Schedule: Model<ScheduleInterface> = model("Schedule", ScheduleSchema);
 
