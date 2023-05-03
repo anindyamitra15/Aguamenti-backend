@@ -26,7 +26,7 @@ export interface ListScheduleUnderLinkedDeviceDto {
 };
 
 export interface DeleteScheduleDto {
-    _id : Types.ObjectId,
+    _id? : Types.ObjectId,
     name : string,
     user_id: Types.ObjectId,
 };
