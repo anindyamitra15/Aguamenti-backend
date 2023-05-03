@@ -57,8 +57,8 @@ export const ListScheduleUnderLinkedDevice = async (req: Request, res: Response)
 export const DeleteSchedule = async (req: Request, res: Response) => {
     const schedule: DeleteScheduleDto = {
         user_id: req.body.user._id,
+        _id: req.body._id,
         name: String(req.body.name),
-        chip_id: String(req.body.chip_id),
     }
     if (!schedule.user_id)
         return generateResponse(res, 400, "ID required");
@@ -68,6 +68,7 @@ export const DeleteSchedule = async (req: Request, res: Response) => {
 
 export const EditSchedule = async (req: Request, res: Response) => {
     const schedule: EditScheduleDto = {
+        _id: req.body._id,
         user_id: req.body.user._id,
         name: String(req.body.name),
         chip_id: String(req.body.chip_id),

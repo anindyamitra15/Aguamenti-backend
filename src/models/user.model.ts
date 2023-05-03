@@ -7,6 +7,7 @@ export interface UserInterface extends Document {
     password: string,
     email: string,
     house_ids?: Array<Types.ObjectId>,
+    schedule_ids?:Array<Types.ObjectId>,
 };
 
 const UserSchema: Schema<UserInterface> = new Schema(
@@ -15,6 +16,7 @@ const UserSchema: Schema<UserInterface> = new Schema(
         email: { type: String, required: true, unique: true },
         password: { type: String, required: true },
         house_ids: [{ type: Schema.Types.ObjectId, ref: 'House' }],
+        schedule_ids: [{ type: Schema.Types.ObjectId, ref: 'Schedule' }],
     },
     {
         timestamps: true
