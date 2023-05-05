@@ -8,7 +8,7 @@ ScheduleRouter.post("/new", AuthorizeUserFromToken, ScheduleController.CreateSch
 ScheduleRouter.get("/listUID", AuthorizeUserFromToken, ScheduleController.ListScheduleUnderUser);
 ScheduleRouter.get("/listDID", AuthorizeUserFromToken, ScheduleController.ListScheduleUnderDevice);
 ScheduleRouter.get("/listLDID", AuthorizeUserFromToken, ScheduleController.ListScheduleUnderLinkedDevice);
-ScheduleRouter.delete("/remove", AuthorizeUserFromToken, ScheduleController.DeleteSchedule);
+ScheduleRouter.post("/remove", AuthorizeUserFromToken, ScheduleController.DeleteSchedule);
 ScheduleRouter.put("/edit", AuthorizeUserFromToken, ScheduleController.EditSchedule);
 
 export default ScheduleRouter;

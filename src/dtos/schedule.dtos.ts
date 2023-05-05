@@ -7,8 +7,8 @@ export interface CreateScheduleDto {
     name: string,
     chip_id: string,
     linked_chip_id?: string,
-    schedule_type: ScheduleType,
-    trigger_type?: TriggerType,
+    schedule_type?: ScheduleType,
+    trigger_type: TriggerType,
     repeat_on?: [WeekDay],
     end_at: Date,
     user_id : Types.ObjectId,
@@ -32,8 +32,8 @@ export interface DeleteScheduleDto {
 };
 
 export interface EditScheduleDto {
-    _id?: Types.ObjectId,
-    name: string,
+    _id: Types.ObjectId,
+    name?: string,
     chip_id?: string,
     linked_chip_id?: string,
     schedule_type?: ScheduleType,

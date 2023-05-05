@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "7a015d66-356f-44c7-b0e9-8753a25ccaa0",
+		"_postman_id": "560fed57-1bd3-428e-a759-9a5667b5748b",
 		"name": "Aguamenti",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "13842212"
+		"_exporter_id": "16504998"
 	},
 	"item": [
 		{
@@ -2019,15 +2019,6 @@
 							"originalRequest": {
 								"method": "GET",
 								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
 								"url": {
 									"raw": "{{base_url}}/device/house-snapshot/636254ca1d68190b44dcbf8e",
 									"host": [
@@ -2350,6 +2341,1028 @@
 							],
 							"cookie": [],
 							"body": "{\n    \"code\": 200,\n    \"message\": \"Moved my device to new House\",\n    \"result\": {\n        \"previous_house_id\": \"6358db4bff2696cdad866be1\",\n        \"new_house_id\": \"6380a769001e2ace81174168\"\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Schedule Routes",
+			"item": [
+				{
+					"name": "Create Schedule",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"Continuous Assessment\",\r\n    \"chip_id\" : \"34748939\",\r\n    \"trigger_type\" : \"action\",\r\n    \"end_at\" : \"8-May-2023\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/schedule/new",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"schedule",
+								"new"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "schedule created successfully",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\" : \"First Sample Schedule\",\r\n    \"chip_id\" : \"34748939\",\r\n    \"trigger_type\" : \"timing\",\r\n    \"repeat_on\" : [\"thu\",\"fri\"],\r\n    \"end_at\" : \"10-July-2023\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/schedule/new",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"schedule",
+										"new"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "93"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"5d-xBJJ//2VFQwthsdmYen1y/anaGE\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 05 May 2023 06:50:59 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"Schedule created\",\n    \"result\": {\n        \"schedule_id\": \"6454a752e3541a2325ba9295\"\n    }\n}"
+						},
+						{
+							"name": "missing params",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"4th Sample Schedule\",\r\n    \"chip_id\": \"1387420-69\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/schedule/new",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"schedule",
+										"new"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "55"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"37-t63daQ3Msj033/f8jb+zqmksXdk\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 05 May 2023 06:58:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"Schedule Trigger Type Required\"\n}"
+						}
+					]
+				},
+				{
+					"name": "List Schedule Under User",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/schedule/listUID",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"schedule",
+								"listUID"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "successful list under user",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/schedule/listUID",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"schedule",
+										"listUID"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "598"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"256-Kinf+fgo3X6vO2apnYwP+QckCmU\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 05 May 2023 07:05:18 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"Here are the schedules for user: Anindya\",\n    \"result\": {\n        \"0\": {\n            \"_id\": \"6454a752e3541a2325ba9295\",\n            \"name\": \"First Sample Schedule\",\n            \"chip_id\": \"34748939\",\n            \"trigger_type\": \"timing\",\n            \"repeat_on\": [\n                \"thu\",\n                \"fri\"\n            ],\n            \"end_at\": \"2023-07-09T18:30:00.000Z\",\n            \"createdAt\": \"2023-05-05T06:50:58.999Z\",\n            \"updatedAt\": \"2023-05-05T06:50:58.999Z\",\n            \"__v\": 0\n        },\n        \"1\": {\n            \"_id\": \"6454aa766005f7222de29410\",\n            \"name\": \"Project Attendance\",\n            \"chip_id\": \"9999666\",\n            \"trigger_type\": \"timing\",\n            \"repeat_on\": [\n                \"thu\",\n                \"fri\"\n            ],\n            \"end_at\": \"2023-05-07T18:30:00.000Z\",\n            \"createdAt\": \"2023-05-05T07:04:22.589Z\",\n            \"updatedAt\": \"2023-05-05T07:04:22.589Z\",\n            \"__v\": 0\n        }\n    }\n}"
+						},
+						{
+							"name": "authorization failed",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/schedule/listUID",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"schedule",
+										"listUID"
+									]
+								}
+							},
+							"status": "Bad Request",
+							"code": 400,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "57"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"39-aDH9pCGWynjcWu/jQrv5UCq8mLo\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 05 May 2023 07:15:03 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 400,\n    \"message\": \"Authorization Header Not Present\"\n}"
+						}
+					]
+				},
+				{
+					"name": "List Schedule Under Device",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"chip_id\": \"34748939\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/schedule/listDID",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"schedule",
+								"listDID"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "successful list under device",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"chip_id\": \"34748939\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/schedule/listDID",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"schedule",
+										"listDID"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "368"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"170-jFZsFSZPZYhHpZFY2rzeRjXVjqk\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 05 May 2023 07:09:39 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"Here are the schedules for the device: 2nd Nov first device (updated)\",\n    \"result\": {\n        \"0\": {\n            \"_id\": \"6454a752e3541a2325ba9295\",\n            \"name\": \"First Sample Schedule\",\n            \"chip_id\": \"34748939\",\n            \"trigger_type\": \"timing\",\n            \"repeat_on\": [\n                \"thu\",\n                \"fri\"\n            ],\n            \"end_at\": \"2023-07-09T18:30:00.000Z\",\n            \"createdAt\": \"2023-05-05T06:50:58.999Z\",\n            \"updatedAt\": \"2023-05-05T06:50:58.999Z\",\n            \"__v\": 0\n        }\n    }\n}"
+						},
+						{
+							"name": "device doesn't exist",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"chip_id\": \"56414564\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/schedule/listDID",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"schedule",
+										"listDID"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "87"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"57-fwz4itMbowZHhsgH57i9BkXtl9A\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 05 May 2023 07:15:43 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 404,\n    \"message\": \"Device doesn't exist and this block isn't triggered as well :)\"\n}"
+						}
+					]
+				},
+				{
+					"name": "List Schedule Under Linked Device",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"linked_chip_id\" : \"9999666\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/schedule/listLDID",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"schedule",
+								"listLDID"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "successful list under linked device",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"linked_chip_id\" : \"9999666\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/schedule/listLDID",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"schedule",
+										"listLDID"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "372"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"174-kPtNoMBgiIQpqW7x+2FYzbAs0rY\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 05 May 2023 07:10:26 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"Here are the schedules for the linked device: 13th Nov first device (updated)\",\n    \"result\": {\n        \"0\": {\n            \"_id\": \"6454aa766005f7222de29410\",\n            \"name\": \"Project Attendance\",\n            \"chip_id\": \"9999666\",\n            \"trigger_type\": \"timing\",\n            \"repeat_on\": [\n                \"thu\",\n                \"fri\"\n            ],\n            \"end_at\": \"2023-05-07T18:30:00.000Z\",\n            \"createdAt\": \"2023-05-05T07:04:22.589Z\",\n            \"updatedAt\": \"2023-05-05T07:04:22.589Z\",\n            \"__v\": 0\n        }\n    }\n}"
+						},
+						{
+							"name": "device doesn't exist",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"linked_chip_id\" : \"845865\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/schedule/listLDID",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"schedule",
+										"listLDID"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "87"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"57-fwz4itMbowZHhsgH57i9BkXtl9A\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 05 May 2023 07:16:07 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 404,\n    \"message\": \"Device doesn't exist and this block isn't triggered as well :)\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Delete Schedule",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"_id\" : \"6454b0459d9494eaea35a9f5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/schedule/remove",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"schedule",
+								"remove"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "schedule deleted successfully using name",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\" : \"First Sample Schedule\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/schedule/remove",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"schedule",
+										"remove"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "41"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"29-eNfMo0z2sj+bnmyD/mOO7lcHgmY\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 05 May 2023 07:27:12 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"Schedule Deleted\"\n}"
+						},
+						{
+							"name": "schedule deleted successfully using ID",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"_id\" : \"6454b0459d9494eaea35a9f5\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/schedule/remove",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"schedule",
+										"remove"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "41"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"29-eNfMo0z2sj+bnmyD/mOO7lcHgmY\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 05 May 2023 07:43:57 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"Schedule Deleted\"\n}"
+						}
+					]
+				},
+				{
+					"name": "Edit Schedule",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{base_url}}/schedule/edit",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"schedule",
+								"edit"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "schedule edited successfully",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\" : \"Project Attendance\",\r\n    \"end_at\" : \"25-May-2023\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/schedule/edit",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"schedule",
+										"edit"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "153"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"99-KR0+6UTYUf+VDVXRbdCWQUjkETQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 05 May 2023 08:04:22 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 200,\n    \"message\": \"Success\",\n    \"result\": {\n        \"user_id\": \"63559b6608a9ee6f58cd2399\",\n        \"name\": \"Project Attendance\",\n        \"chip_id\": \"undefined\",\n        \"end_at\": \"25-May-2023\"\n    }\n}"
+						},
+						{
+							"name": "schedule not found",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{base_url}}/schedule/edit",
+									"host": [
+										"{{base_url}}"
+									],
+									"path": [
+										"schedule",
+										"edit"
+									]
+								}
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "41"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"29-IEy/JRD6W6xuWkNMn2is8fpltXI\""
+								},
+								{
+									"key": "Date",
+									"value": "Fri, 05 May 2023 08:05:34 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"code\": 404,\n    \"message\": \"No such schedule\"\n}"
 						}
 					]
 				}
