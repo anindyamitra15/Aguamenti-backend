@@ -135,7 +135,7 @@ export const RemoveHouse = async (data: RemoveHouseDto): Promise<GenericResponse
 export const AllHouses = async (data: AllHousesDto): Promise<GenericResponse> => {
     try {
         const findUser = await User.findOne({ _id: data.user_id }, { password: 0 }).populate('house_ids');
-        if (!findUser) return { code: 404, message: "User doesn't exist and this block isn't triggered as well :)" };
+        if (!findUser) return { code: 404, message: "User doesn't exist" };
         return { code: 200, result: findUser.house_ids, message: `Here are the houses for user: ${findUser.name}` };
     } catch (error) {
         console.log(error);
