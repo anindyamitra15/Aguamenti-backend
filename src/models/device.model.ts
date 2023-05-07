@@ -12,6 +12,7 @@ interface DeviceInterface extends Document {
     online: boolean,
     // schedules: [Schedule]
     house_id?: Types.ObjectId,
+    schedule_ids?:Array<Types.ObjectId>,
     device_type?: DeviceType,
 };
 
@@ -27,6 +28,7 @@ const DeviceSchema: Schema<DeviceInterface> = new Schema(
         state: { type: Boolean },
         value: { type: Schema.Types.Mixed },
         house_id: { type: Schema.Types.ObjectId, ref: 'House' },
+        schedule_ids: [{ type: Schema.Types.ObjectId, ref: 'Schedule' }],
     },
     {
         timestamps: true
