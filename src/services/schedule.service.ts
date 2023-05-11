@@ -14,6 +14,7 @@ export const CreateSchedule = async (schedule: CreateScheduleDto): Promise<Gener
         if (!schedule.name) return { code: 400, message: "Schedule Name Required" };
         if (!schedule.chip_id) return { code: 400, message: "Schedule Device ID Required" };
         if (!schedule.trigger_type) return { code: 400, message: "Schedule Trigger Type Required" };
+        if (!schedule.repeat_time) return { code: 400, message: "Schedule Repeating Date/Time Required" };
         if (!schedule.end_at) return { code: 400, message: "Schedule End Date Required" };
 
         const newSchedule = new Schedule({ ...schedule });
@@ -32,7 +33,7 @@ export const CreateSchedule = async (schedule: CreateScheduleDto): Promise<Gener
 export const ListScheduleUnderUser = async (schedule: ListScheduleUnderUserDto): Promise<GenericResponse> => {
     try {
         const findUser = await User.findOne({ _id: schedule.user_id }, { password: 0 }).populate('schedule_ids');
-        if (!findUser) return { code: 404, message: "User doesn't exist and this block isn't triggered as well :)" };
+        if (!findUser) return { code: 404, message: "User doesn't exist" };
         return { code: 200, result: findUser.schedule_ids, message: `Here are the schedules for user: ${findUser.name}` };
     } catch (error) {
         console.log(error);
@@ -43,7 +44,7 @@ export const ListScheduleUnderUser = async (schedule: ListScheduleUnderUserDto):
 export const ListScheduleUnderDevice = async (schedule: ListScheduleUnderDeviceDto): Promise<GenericResponse> => {
     try {
         const findDevice = await Device.findOne({ chip_id: schedule.chip_id }, { password: 0 }).populate('schedule_ids');
-        if (!findDevice) return { code: 404, message: "Device doesn't exist and this block isn't triggered as well :)" };
+        if (!findDevice) return { code: 404, message: "Device doesn't exist" };
         return { code: 200, result: findDevice.schedule_ids, message: `Here are the schedules for the device: ${findDevice.name}` };
     } catch (error) {
         console.log(error);
@@ -54,7 +55,7 @@ export const ListScheduleUnderDevice = async (schedule: ListScheduleUnderDeviceD
 export const ListScheduleUnderLinkedDevice = async (schedule: ListScheduleUnderLinkedDeviceDto): Promise<GenericResponse> => {
     try {
         const findDevice = await Device.findOne({ chip_id: schedule.linked_chip_id }, { password: 0 }).populate('schedule_ids');
-        if (!findDevice) return { code: 404, message: "Device doesn't exist and this block isn't triggered as well :)" };
+        if (!findDevice) return { code: 404, message: "Device doesn't exist" };
         return { code: 200, result: findDevice.schedule_ids, message: `Here are the schedules for the linked device: ${findDevice.name}` };
     } catch (error) {
         console.log(error);
@@ -102,6 +103,7 @@ export const EditSchedule = async (schedule: EditScheduleDto): Promise<GenericRe
         if (schedule.chip_id) findSchedule.chip_id = schedule.chip_id;
         if (schedule.linked_chip_id) findSchedule.linked_chip_id = schedule.linked_chip_id;
         if (schedule.schedule_type) findSchedule.schedule_type = schedule.schedule_type;
+        if (schedule.repeat_time) findSchedule.repeat_time = schedule.repeat_time;
         if (schedule.repeat_on) findSchedule.repeat_on = schedule.repeat_on;
         if (schedule.end_at) findSchedule.end_at = schedule.end_at;
 
