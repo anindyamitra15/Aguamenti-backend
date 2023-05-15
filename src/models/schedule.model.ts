@@ -1,5 +1,5 @@
 import { Document, Model, model, Schema, Types } from "mongoose";
-
+import { atMinute, atHour, combine, inMonth, between, onDayOfTheWeek, onDayOfTheMonth } from "node-cron-expression";
 export type ScheduleType = "on" | "off" | "dim" | "and" | "or";
 export const ScheduleTypes: string[] = ["on", "off", "dim", "and", "or"];
 
@@ -7,17 +7,17 @@ export type TriggerType = "timing" | "action";
 export const TriggerTypes: string[] = ["timing", "action"];
 
 
-export type WeekDay = "mon" | "tue" | "wed" | "thu" | "fri" | "sat" | "sun";
-export const WeekDayList = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+export type WeekDay = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
+export const WeekDayList = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 
 export const WeekDays: { [key: number]: WeekDay } = Object.freeze({
-    0: 'mon',
-    1: 'tue',
-    2: 'wed',
-    3: 'thu',
-    4: 'fri',
-    5: 'sat',
-    6: 'sun'
+    0: 'Monday',
+    1: 'Tuesday',
+    2: 'Wednesday',
+    3: 'Thursday',
+    4: 'Friday',
+    5: 'Saturday',
+    6: 'Sunday'
 });
 
 interface ScheduleInterface extends Document {
@@ -67,13 +67,24 @@ ScheduleSchema.pre<ScheduleInterface>("save", function (next) {
 });
 
 const dateToCron = (date: Date, day?: [WeekDay]) => {
-    const minutes = (date.getMinutes())?date.getMinutes():'*';
-    const hours = (date.getHours)?date.getHours():'*';
-    const days = (date.getDate())?date.getDate():'*';
-    const months = (date.getMonth())?date.getMonth() + 1:'*';
-    const dayOfWeek = (day)?day:'*';
+
+//  ┌────────────── second (optional)
+//  │ ┌──────────── minute
+//  │ │ ┌────────── hour
+//  │ │ │ ┌──────── day of month
+//  │ │ │ │ ┌────── month
+//  │ │ │ │ │ ┌──── day of week
+//  │ │ │ │ │ │
+//  │ │ │ │ │ │
+//  * * * * * *
+    const minutes = date.getMinutes()
+    const hours = date.getHours()
+    const dayOfMonth = date.getDate()
+    const month = date.getMonth()
+    const dayOfWeek = day
+    const cron_exp = (combine(atMinute(minutes),atHour(hours),inMonth(month+1),onDayOfTheMonth(dayOfMonth),onDayOfTheWeek(dayOfWeek))).toString()
     
-    return `${minutes} ${hours} ${days} ${months} ${dayOfWeek}`;
+    return cron_exp;
 };
 
 const Schedule: Model<ScheduleInterface> = model("Schedule", ScheduleSchema);
