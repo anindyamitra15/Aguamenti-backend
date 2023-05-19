@@ -1,11 +1,10 @@
 import { Document, Model, model, Schema, Types } from "mongoose";
-import { atMinute, atHour, combine, inMonth, between, onDayOfTheWeek, onDayOfTheMonth } from "node-cron-expression";
+import { combine, onDayOfTheWeek } from "node-cron-expression";
 export type ScheduleType = "on" | "off" | "dim" | "and" | "or";
 export const ScheduleTypes: string[] = ["on", "off", "dim", "and", "or"];
 
 export type TriggerType = "timing" | "action";
 export const TriggerTypes: string[] = ["timing", "action"];
-
 
 export type WeekDay = "Monday" | "Tuesday" | "Wednesday" | "Thursday" | "Friday" | "Saturday" | "Sunday";
 export const WeekDayList = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
@@ -26,7 +25,7 @@ interface ScheduleInterface extends Document {
     linked_chip_id?: string,
     schedule_type: ScheduleType,
     trigger_type?: TriggerType,
-    repeat_time: Date,
+    repeat_time: Date ,
     repeat_on?: [WeekDay],
     end_at: Date,    //js built-in date class
     cron?: string,
@@ -55,6 +54,7 @@ ScheduleSchema.pre<ScheduleInterface>("save", function (next) {
         this.isNew ||
         this.isModified("schedule_type") ||
         this.isModified("trigger_type") ||
+        this.isModified("repeat_time") ||
         this.isModified("repeat_on") ||
         this.isModified("end_at")
     ){
@@ -77,12 +77,11 @@ const dateToCron = (date: Date, day?: [WeekDay]) => {
 //  │ │ │ │ │ │
 //  │ │ │ │ │ │
 //  * * * * * *
-    const minutes = date.getMinutes()
-    const hours = date.getHours()
-    const dayOfMonth = date.getDate()
-    const month = date.getMonth()
-    const dayOfWeek = day
-    const cron_exp = (combine(atMinute(minutes),atHour(hours),inMonth(month+1),onDayOfTheMonth(dayOfMonth),onDayOfTheWeek(dayOfWeek))).toString()
+    const minutes = (date.getMinutes())?date.getMinutes():"*"
+    const hours = (date.getHours())?date.getHours():"*"
+    const month = (date.getMonth()+1)?date.getMonth()+1:"*"
+    const dayOfWeek = onDayOfTheWeek(day).toString().substring(8)
+    const cron_exp = `${minutes} ${hours} * ${month} ${dayOfWeek}`
     
     return cron_exp;
 };
