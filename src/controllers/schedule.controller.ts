@@ -15,6 +15,7 @@ export const CreateSchedule = async (req: Request, res: Response) => {
         linked_chip_id: req.body.linked_chip_id,
         schedule_type: req.body.schedule_type as ScheduleType,
         trigger_type: req.body.trigger_type as TriggerType,
+        repeat_time: req.body.repeat_time as Date,
         repeat_on: req.body.repeat_on as [WeekDay],
         end_at: req.body.end_at as Date,
     };
@@ -71,9 +72,10 @@ export const EditSchedule = async (req: Request, res: Response) => {
         _id: req.body._id,
         user_id: req.body.user._id,
         name: String(req.body.name),
-        chip_id: String(req.body.chip_id),
+        chip_id: req.body.chip_id,
         linked_chip_id: req.body.linked_chip_id,
         schedule_type: req.body.schedule_type as ScheduleType,
+        repeat_time: req.body.repeat_time as Date,
         repeat_on: req.body.repeat_on as [WeekDay],
         end_at: req.body.end_at as Date,
     };
