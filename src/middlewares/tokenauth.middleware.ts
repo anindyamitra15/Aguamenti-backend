@@ -10,7 +10,7 @@ const AuthorizeUserFromToken = async (
     next: NextFunction) => {
     try {
         let token = req.header("Authorization");
-        if (!token) return generateResponse(res, 400, null, "Authorization Header Not Present");
+        if (!token) return generateResponse(res, 400, "Authorization Header Not Present");
 
         token = token.split(" ")[1];
 
@@ -19,18 +19,18 @@ const AuthorizeUserFromToken = async (
             jwt_secret
         ) as jwt.JwtPayload;
         
-        if (!decoded) return generateResponse(res, 401, null, "Token Expired");
+        if (!decoded) return generateResponse(res, 401, "Token Expired");
 
         const findUser = await User.findOne({ email: decoded.email }, {password: 0});
 
-        if (!findUser) return generateResponse(res, 404, null, "User doesn't exist");
+        if (!findUser) return generateResponse(res, 404, "User doesn't exist");
 
         req.body.user = findUser;
 
         next();
 
     } catch (error) {
-        generateResponse(res, 401, error, "Token verification failed");
+        generateResponse(res, 401, "Token verification failed", error);
     }
 };
 

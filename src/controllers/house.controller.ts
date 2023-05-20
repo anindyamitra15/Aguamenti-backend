@@ -3,12 +3,13 @@ import { ChangeOwnerDto, CreateHouseDto, DeleteHouseDto, AddDeviceToHouseDto, Up
 import generateResponse from "../httpresponsecreater";
 import * as HouseService from '../services/house.service';
 
+
 export const CreateHouse = async (req: Request, res: Response) => {
     const house: CreateHouseDto = {
         name: req.body.name,
         owner_id: req.body.user._id
     };
-    if (!house.name) return generateResponse(res, 400, null, "Name is required");
+    if (!house.name) return generateResponse(res, 400, "Name is required");
     const { code, message, result } = await HouseService.CreateHouse(house);
     return generateResponse(res, code, result, message);
 };
@@ -18,7 +19,7 @@ export const HouseDetails = async (req: Request, res: Response) => {
         house_id: req.params["house_id"] as any,
         user_id: req.body.user._id
     };
-    if (!house.house_id) return generateResponse(res, 400, null, "House id is required");
+    if (!house.house_id) return generateResponse(res, 400, "House id is required");
     const { code, message, result } = await HouseService.HouseDetails(house);
     return generateResponse(res, code, result, message);
 };
@@ -28,7 +29,7 @@ export const DeleteHouse = async (req: Request, res: Response) => {
         _id: req.body.house_id,
         owner_id: req.body.user._id
     };
-    if (!house._id) return generateResponse(res, 400, null, "ID is required");
+    if (!house._id) return generateResponse(res, 400, "ID is required");
     const { code, message, result } = await HouseService.DeleteHouse(house);
     return generateResponse(res, code, result, message);
 };
@@ -38,7 +39,7 @@ export const UpdateHouse = async (req: Request, res: Response) => {
         name: req.body.name,
         owner_id: req.body.user._id
     };
-    if (!house._id || !house.name) return generateResponse(res, 400, null, "Insufficient data");
+    if (!house._id || !house.name) return generateResponse(res, 400, "Insufficient data");
     const { code, message, result } = await HouseService.UpdateHouse(house);
     return generateResponse(res, code, result, message);
 };
@@ -54,7 +55,7 @@ export const AddDevice = async (req: Request, res: Response) => {
     if ((!data.chip_id && !data.device_id) || !data.house_id)
         return generateResponse(res, 400);
     const { code, message, result } = await HouseService.AddDevice(data);
-    return generateResponse(res, code, result, message);
+    return generateResponse(res, code, message, result);
 };
 export const RemoveDevice = async (req: Request, res: Response) => {
     const data: RemoveDeviceFromHouseDto = {
@@ -67,7 +68,7 @@ export const RemoveDevice = async (req: Request, res: Response) => {
     if (!data.chip_id && !data.device_id)
         return generateResponse(res, 400);
     const { code, message, result } = await HouseService.RemoveDevice(data);
-    return generateResponse(res, code, result, message);
+    return generateResponse(res, code, message, result);
 };
 
 export const AddUser = async (req: Request, res: Response) => {
@@ -80,7 +81,7 @@ export const AddUser = async (req: Request, res: Response) => {
     if (!data.user_id || !data.house_id) return generateResponse(res, 400);
 
     const { code, message, result } = await HouseService.AddUser(data);
-    return generateResponse(res, code, result, message);
+    return generateResponse(res, code, message, result);
 };
 export const RemoveUser = async (req: Request, res: Response) => {
     const data: UpdateUserHouseDto = {
@@ -101,8 +102,9 @@ export const ChangeOwner = async (req: Request, res: Response) => {
         _id: req.body.house_id
     };
 
-    if (!data.new_owner_id || !data._id) return generateResponse(res, 400, null, "Insufficient data");
+    if (!data.new_owner_id || !data._id) return generateResponse(res, 400, "Insufficient data");
 
     const { code, message, result } = await HouseService.ChangeOwner(data);
-    return generateResponse(res, code, result, message);
+    return generateResponse(res, code, message, result);
+
 };

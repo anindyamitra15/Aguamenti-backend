@@ -1,10 +1,12 @@
 import { Types } from "mongoose";
-import { ScheduleType } from "../models/schedule.model";
+import { ScheduleType, ThresholdType } from "../models/schedule.model";
 import { TriggerType } from "../models/schedule.model";
 import { WeekDay } from "../models/schedule.model";
 
 export interface CreateScheduleDto {
     name: string,
+    threshold_value?: any,
+    threshold_type?: ThresholdType,
     chip_id: string,
     linked_chip_id?: string,
     schedule_type?: ScheduleType,
@@ -12,7 +14,7 @@ export interface CreateScheduleDto {
     repeat_time: Date,
     repeat_on?: [WeekDay],
     end_at: Date,
-    user_id : Types.ObjectId,
+    owner_id : Types.ObjectId,
 };
 
 export interface ListScheduleUnderUserDto {
@@ -34,6 +36,10 @@ export interface DeleteScheduleDto {
 
 export interface EditScheduleDto {
     _id: Types.ObjectId,
+    user_id: Types.ObjectId,
+    enabled?: boolean,
+    threshold_value?: any,
+    threshold_type?: ThresholdType,
     name?: string,
     chip_id?: string,
     linked_chip_id?: string,
@@ -41,6 +47,5 @@ export interface EditScheduleDto {
     repeat_time: Date,
     repeat_on?: [WeekDay],
     end_at?: Date,
-    user_id: Types.ObjectId,
 };
 

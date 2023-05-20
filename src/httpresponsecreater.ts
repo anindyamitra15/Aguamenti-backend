@@ -15,8 +15,8 @@ const messages: { [key: number]: string } = {
 const generateResponse = (
     res: Response,
     code: number = 200,
-    result?: any,
     message?: string,
+    result?: any,
 ) => {
     if (!res) return;
 

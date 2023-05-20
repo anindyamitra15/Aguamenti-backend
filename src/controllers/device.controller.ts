@@ -19,7 +19,7 @@ export const Create = async (req: Request, res: Response) => {
     // if (data.device_type === 'tank_level' && !data.linked_chip_id)
     //     return generateResponse(res, 400);
     const { code, message, result } = await DeviceService.Create(data);
-    return generateResponse(res, code, result, message);
+    return generateResponse(res, code, message, result);
 };
 
 
@@ -31,7 +31,7 @@ export const Login = async (req: Request, res: Response) => {
     if (!data.chip_id) return generateResponse(res, 400);
 
     const { code, message, result } = await DeviceService.Login(data);;
-    return generateResponse(res, code, result, message);
+    return generateResponse(res, code, message, result);
 };
 
 
@@ -46,7 +46,7 @@ export const UpdateDevice = async (req: Request, res: Response) => {
     if (!data.chip_id || (!data.name && !data.house_id && !data.device_type))
         return generateResponse(res, 400);
     const { code, message, result } = await DeviceService.UpdateDevice(data);
-    return generateResponse(res, code, result, message);
+    return generateResponse(res, code, message, result);
 };
 
 
@@ -58,7 +58,7 @@ export const HouseSnapshot = async (req: Request, res: Response) => {
     if (!data.house_id) return generateResponse(res, 400);
 
     const { code, message, result } = await DeviceService.HouseSnapshot(data);
-    return generateResponse(res, code, result, message);
+    return generateResponse(res, code, message, result);
 };
 
 
@@ -73,7 +73,7 @@ export const ChangeHouse = async (req: Request, res: Response) => {
     if (!data.house_id) return generateResponse(res, 400);
 
     const { code, message, result } = await DeviceService.ChangeHouse(data);
-    return generateResponse(res, code, result, message);
+    return generateResponse(res, code, message, result);
 };
 
 // export const LinkPump = async (req: Request, res: Response) => {

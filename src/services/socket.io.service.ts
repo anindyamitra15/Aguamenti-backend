@@ -1,6 +1,7 @@
 import { Server, Socket } from "socket.io";
 import { ClientToServerEvents, DevicePacket, InterServerEvents, ServerToClientEvents, SocketData, TypedServer, TypedSocket, UIPacket } from "../dtos/socket.io.dtos";
 import Device from "../models/device.model";
+import Schedule from "../models/schedule.model";
 
 
 
@@ -37,7 +38,7 @@ const FromDeviceHandler = (socket: TypedSocket) => {
             console.log("from_device:", data);
             const epExtract = socket.data.endpoint?.split('/') as string[];
             const endpoint = epExtract[0] as string;
-            const chip_id = `${epExtract[1] as string}${data.key && data.key > 0 ? `-${data.key}`: ''}`;
+            const chip_id = `${epExtract[1] as string}${data.key && data.key > 0 ? `-${data.key}` : ''}`;
 
             const findDevice = await Device.findOne({ chip_id });
 
@@ -48,12 +49,70 @@ const FromDeviceHandler = (socket: TypedSocket) => {
             if (data.state !== null || data.state !== undefined) findDevice.state = data.state;
             if (data.value !== null || data.value !== undefined) findDevice.value = data.value;
 
-            // if (findDevice.device_type === 'tank_level') {
-            //     // device-sync
-            //     socket.broadcast
-            //         .to(`${endpoint as string}/${findDevice.linked_chip_id?.split('-')[0]}`)
-            //         .emit("device_sync", { ...data });
-            // }
+
+            const findSchedule = await Schedule.findOne({ chip_id: findDevice.chip_id });
+            if (findSchedule) {
+                const data = findSchedule.linked_chip_id?.split('-');
+                const sendData: DevicePacket = {
+                    key: data[1] ? Number(data[1]) : 0,
+                };
+
+                if (findSchedule?.trigger_type === 'action') {
+
+                    let threshold_value: any;
+                    switch (findDevice.device_type) {
+                        case "slider":
+                            threshold_value = Number(findSchedule.threshold_value)
+                            break;
+                        case "tank_level":
+                            threshold_value = Number(findSchedule.threshold_value)
+                            break;
+                        case "switch":
+                            threshold_value = Boolean(findSchedule.threshold_value)
+                            break;
+                    }
+
+                    let conditionMet = false;
+                    switch (findSchedule.threshold_type) {
+                        case "<=":
+                            conditionMet = findDevice.value <= threshold_value;
+                            break;
+                        case ">=":
+                            conditionMet = findDevice.value >= threshold_value;
+                            break;
+                        case ">":
+                            conditionMet = findDevice.value > threshold_value;
+                            break;
+                        case "<":
+                            conditionMet = findDevice.value < threshold_value;
+                            break;
+                        case "==":
+                            conditionMet = findDevice.value == threshold_value;
+                            break;
+
+                    }
+                    if (conditionMet)
+                        switch (findSchedule.schedule_type) {
+                            case "on":
+                                sendData.state = true;
+                                break;
+                            case "off":
+                                sendData.state = false;
+                                break;
+                        }
+
+                    const findTriggeredDevice = await Device.findOne({ chip_id: findSchedule.linked_chip_id });
+                    if (findTriggeredDevice) {
+                        findTriggeredDevice.state = sendData.state;
+                        findTriggeredDevice.value = sendData.value;
+
+                        socket.broadcast
+                            .to(`${endpoint as string}/${data[0]}`)
+                            .emit("device_sync", { ...sendData });
+                    }
+                }
+            }
+
 
             // sending to ui
             socket.broadcast

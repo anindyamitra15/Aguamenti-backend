@@ -8,7 +8,7 @@ export const Register = async (req: Request, res: Response) => {
     if (!user.email || !user.name || !user.password)
         return generateResponse(res, 400);
     const { code, message, result } = await UserServices.Register(user);
-    return generateResponse(res, code, result, message);
+    return generateResponse(res, code, message, result);
 };
 
 export const Login = async (req: Request, res: Response) => {
@@ -16,7 +16,7 @@ export const Login = async (req: Request, res: Response) => {
     if (!user.email)
         return generateResponse(res, 400);
     const { code, message, result } = await UserServices.Login(user);
-    return generateResponse(res, code, result, message);
+    return generateResponse(res, code, message, result);
 };
 
 export const ChangePassword = async (req: Request, res: Response) => {
@@ -29,7 +29,7 @@ export const ChangePassword = async (req: Request, res: Response) => {
     if (!user._id)
         return generateResponse(res, 400, "ID required");
     const { code, message, result } = await UserServices.ChangePassword(user);
-    return generateResponse(res, code, result, message);
+    return generateResponse(res, code, message, result);
 };
 
 export const AddHouse = async (req: Request, res: Response) => {
@@ -42,7 +42,7 @@ export const AddHouse = async (req: Request, res: Response) => {
     if (!data.house_id || (!data.user_id && !data.email))
         return generateResponse(res, 400);
     const { code, message, result } = await UserServices.AddHouse(data);
-    return generateResponse(res, code, result, message);
+    return generateResponse(res, code, message, result);
 };
 
 export const RemoveHouse = async (req: Request, res: Response) => {
@@ -55,7 +55,7 @@ export const RemoveHouse = async (req: Request, res: Response) => {
     if (!data.house_id || (!data.user_id && !data.email))
         return generateResponse(res, 400);
     const { code, message, result } = await UserServices.RemoveHouse(data);
-    return generateResponse(res, code, result, message);
+    return generateResponse(res, code, message, result);
 };
 
 export const EmailExists = async (req: Request, res: Response) => {
@@ -67,5 +67,5 @@ export const AllHouses = async (req: Request, res: Response) => {
         user_id: req.body.user._id
     };
     const { code, message, result } = await UserServices.AllHouses(data);
-    return generateResponse(res, code, result, message);
+    return generateResponse(res, code, message, result);
 };
