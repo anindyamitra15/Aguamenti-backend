@@ -30,7 +30,7 @@ export const HouseDetails = async (house: HouseDetailsDto): Promise<GenericRespo
         const findHouse = await House.findOne({ _id: house.house_id }, { endpoint: 1, name: 1, owner_id: 1 });
         if (!findHouse) return { code: 400, message: "Invalid house id" };
 
-        return { code: 200, result: { ...findHouse }, message: "House found" };
+        return { code: 200, result: { house: findHouse }, message: "House found" };
     } catch (error) {
         console.log(error);
         return { code: 500 };

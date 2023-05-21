@@ -11,7 +11,7 @@ export const CreateHouse = async (req: Request, res: Response) => {
     };
     if (!house.name) return generateResponse(res, 400, "Name is required");
     const { code, message, result } = await HouseService.CreateHouse(house);
-    return generateResponse(res, code, result, message);
+    return generateResponse(res, code, message, result);
 };
 
 export const HouseDetails = async (req: Request, res: Response) => {
@@ -21,7 +21,7 @@ export const HouseDetails = async (req: Request, res: Response) => {
     };
     if (!house.house_id) return generateResponse(res, 400, "House id is required");
     const { code, message, result } = await HouseService.HouseDetails(house);
-    return generateResponse(res, code, result, message);
+    return generateResponse(res, code, message, result);
 };
 
 export const DeleteHouse = async (req: Request, res: Response) => {
@@ -31,7 +31,7 @@ export const DeleteHouse = async (req: Request, res: Response) => {
     };
     if (!house._id) return generateResponse(res, 400, "ID is required");
     const { code, message, result } = await HouseService.DeleteHouse(house);
-    return generateResponse(res, code, result, message);
+    return generateResponse(res, code, message, result);
 };
 export const UpdateHouse = async (req: Request, res: Response) => {
     const house: UpdateHouseDto = {
@@ -41,7 +41,7 @@ export const UpdateHouse = async (req: Request, res: Response) => {
     };
     if (!house._id || !house.name) return generateResponse(res, 400, "Insufficient data");
     const { code, message, result } = await HouseService.UpdateHouse(house);
-    return generateResponse(res, code, result, message);
+    return generateResponse(res, code, message, result);
 };
 export const AddDevice = async (req: Request, res: Response) => {
     const data: AddDeviceToHouseDto = {
@@ -93,7 +93,7 @@ export const RemoveUser = async (req: Request, res: Response) => {
     if (!data.user_id || !data.house_id) return generateResponse(res, 400);
 
     const { code, message, result } = await HouseService.RemoveUser(data);
-    return generateResponse(res, code, result, message);
+    return generateResponse(res, code, message, result);
 };
 export const ChangeOwner = async (req: Request, res: Response) => {
     const data: ChangeOwnerDto = {
