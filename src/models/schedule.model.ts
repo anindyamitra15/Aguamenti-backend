@@ -31,12 +31,12 @@ interface ScheduleInterface extends Document {
     // The device which reacts to the schedule
     linked_chip_id: string,
     schedule_type: ScheduleType,
-    trigger_type?: TriggerType,
+    trigger_type: TriggerType,
     threshold_value?: any,
-    threshold_type: ThresholdType,
-    repeat_time: Date,
+    threshold_type?: ThresholdType,
+    repeat_time?: Date,
     repeat_on?: [WeekDay],
-    end_at: Date,    //js built-in date class
+    end_at?: Date,    //js built-in date class
     cron?: string,
 };
 
@@ -51,7 +51,7 @@ const ScheduleSchema: Schema<ScheduleInterface> = new Schema(
         chip_id: { type: String },
         linked_chip_id: { type: String, required: true },
         schedule_type: { type: String, enum: ScheduleTypes },
-        trigger_type: { type: String, enum: TriggerTypes, default: String(TriggerTypes[0]) },
+        trigger_type: { type: String, enum: TriggerTypes, required: true },
         repeat_time: { type: Date },
         repeat_on: { type: [String], enum: WeekDays },
         end_at: { type: Date },
@@ -91,7 +91,7 @@ ScheduleSchema.pre<ScheduleInterface>("save", function (next) {
         this.isModified("repeat_on") ||
         this.isModified("end_at")
     ) {
-        if (this.trigger_type == 'timing') {//function to convert readable time data to cron string
+        if (this.trigger_type == 'timing' && this.repeat_time) {//function to convert readable time data to cron string
             this.cron = dateToCron(this.repeat_time, this.repeat_on);
         }
         next();

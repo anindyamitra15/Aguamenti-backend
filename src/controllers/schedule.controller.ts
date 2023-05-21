@@ -57,7 +57,7 @@ export const ListScheduleUnderUser = async (req: Request, res: Response) => {
 
 export const ListScheduleUnderDevice = async (req: Request, res: Response) => {
     const schedule: ListScheduleUnderDeviceDto = {
-        chip_id: String(req.body.chip_id),
+        chip_id: req.params.chip_id,
     };
     if (!schedule.chip_id)
         return generateResponse(res, 400, "Chip ID required");
@@ -67,7 +67,7 @@ export const ListScheduleUnderDevice = async (req: Request, res: Response) => {
 
 export const ListScheduleUnderLinkedDevice = async (req: Request, res: Response) => {
     const schedule: ListScheduleUnderLinkedDeviceDto = {
-        linked_chip_id: String(req.body.linked_chip_id),
+        linked_chip_id: req.params.linked_chip_id,
     };
     if (!schedule.linked_chip_id)
         return generateResponse(res, 400, "Linked Chip ID required");

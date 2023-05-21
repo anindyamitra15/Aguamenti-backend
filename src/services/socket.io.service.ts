@@ -51,13 +51,13 @@ const FromDeviceHandler = (socket: TypedSocket) => {
 
 
             const findSchedule = await Schedule.findOne({ chip_id: findDevice.chip_id });
-            if (findSchedule) {
+            if (findSchedule && findSchedule.enabled) {
                 const data = findSchedule.linked_chip_id?.split('-');
                 const sendData: DevicePacket = {
                     key: data[1] ? Number(data[1]) : 0,
                 };
 
-                if (findSchedule?.trigger_type === 'action') {
+                if (findSchedule.trigger_type === 'action') {
 
                     let threshold_value: any;
                     switch (findDevice.device_type) {
