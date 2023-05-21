@@ -112,6 +112,8 @@ const FromDeviceHandler = (socket: TypedSocket) => {
                         socket.broadcast
                             .to(`${endpoint as string}/${data[0]}`)
                             .emit("device_sync", { ...sendData });
+                        
+                        await findTriggeredDevice.save();
                     }
                 }
             }
