@@ -59,7 +59,7 @@ const FromDeviceHandler = (socket: TypedSocket) => {
 
                 if (findSchedule.trigger_type === 'action') {
 
-                    let threshold_value: any;
+                    let threshold_value: number | boolean | undefined;
                     switch (findDevice.device_type) {
                         case "slider":
                             threshold_value = Number(findSchedule.threshold_value)
@@ -69,6 +69,9 @@ const FromDeviceHandler = (socket: TypedSocket) => {
                             break;
                         case "switch":
                             threshold_value = Boolean(findSchedule.threshold_value)
+                            break;
+                        default:
+                            threshold_value = Number(findSchedule.threshold_value ?? 0)
                             break;
                     }
 
