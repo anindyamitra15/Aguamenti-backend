@@ -12,8 +12,8 @@ export const CreateSchedule = async (req: Request, res: Response) => {
         owner_id: req.body.user._id,
         threshold_value: req.body.threshold_value,
         threshold_type: req.body.threshold_type as ThresholdType,
-        name: String(req.body.name),
-        chip_id: String(req.body.chip_id),
+        name: req.body.name,
+        chip_id: req.body.chip_id,
         linked_chip_id: req.body.linked_chip_id,
         schedule_type: req.body.schedule_type as ScheduleType,
         trigger_type: req.body.trigger_type as TriggerType,
@@ -79,7 +79,7 @@ export const DeleteSchedule = async (req: Request, res: Response) => {
     const schedule: DeleteScheduleDto = {
         user_id: req.body.user._id,
         _id: req.body._id,
-        name: String(req.body.name),
+        name: req.body.name,
     }
     if (!schedule.user_id)
         return generateResponse(res, 400, "ID required");

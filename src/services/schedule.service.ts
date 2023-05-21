@@ -99,7 +99,7 @@ export const EditSchedule = async (schedule: EditScheduleDto): Promise<GenericRe
         if (!findSchedule) return { code: 404, message: "No such schedule" };
 
         if (schedule.name) findSchedule.name = schedule.name;
-        if (schedule.chip_id) {
+        if (schedule.chip_id != undefined) {
             const findDevice = await Device.findOne({ chip_id: findSchedule.chip_id });
             if (findDevice)
                 findSchedule.chip_id = findDevice.chip_id;
