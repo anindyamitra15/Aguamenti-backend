@@ -1,4 +1,5 @@
 import { Document, Model, model, Schema, Types } from "mongoose";
+import { HouseInterface } from "./house.model";
 
 export type DeviceType = "switch" | "slider" | "pump" | "tank_level";
 export const DeviceTypes: string[] = ["switch", "slider", "pump", "tank_level"];
@@ -11,8 +12,8 @@ interface DeviceInterface extends Document {
     value?: any, //TODO: check if any restrictions should be applied
     online: boolean,
     // schedules: [Schedule]
-    house_id?: Types.ObjectId,
-    schedule_ids?:Array<Types.ObjectId>,
+    house_id?: Types.ObjectId | HouseInterface,
+    schedule_ids?: Array<Types.ObjectId>,
     device_type?: DeviceType,
 };
 

@@ -1,5 +1,4 @@
 import { Request, Response } from "express";
-import { Types } from "mongoose";
 import { CreateScheduleDto, DeleteScheduleDto, EditScheduleDto, ListScheduleUnderDeviceDto, ListScheduleUnderLinkedDeviceDto, ListScheduleUnderUserDto } from "../dtos/schedule.dtos";
 import generateResponse from "../httpresponsecreater";
 import { ScheduleType, ThresholdType } from "../models/schedule.model";

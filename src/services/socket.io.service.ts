@@ -49,74 +49,80 @@ const FromDeviceHandler = (socket: TypedSocket) => {
             if (data.state !== null || data.state !== undefined) findDevice.state = data.state;
             if (data.value !== null || data.value !== undefined) findDevice.value = data.value;
 
+            // find all the schedules triggered by findDevice device
+            const findSchedules = await Schedule.find({ chip_id: findDevice.chip_id });
+            findSchedules.forEach(async findSchedule => {
 
-            const findSchedule = await Schedule.findOne({ chip_id: findDevice.chip_id });
-            if (findSchedule && findSchedule.enabled) {
-                const data = findSchedule.linked_chip_id?.split('-');
-                const sendData: DevicePacket = {
-                    key: data[1] ? Number(data[1]) : 0,
-                };
+                if (findSchedule && findSchedule.enabled) {
+                    const data = findSchedule.linked_chip_id?.split('-');
+                    const segments = data.length;
+                    const sendData: DevicePacket = {
+                        key: (segments > 1) ? Number(data[1]) : 0,
+                    };
 
-                if (findSchedule.trigger_type === 'action') {
+                    if (findSchedule.trigger_type === 'action' &&
+                        (findSchedule.threshold_value != undefined || findSchedule.threshold_value != null)
+                    ) {
 
-                    let threshold_value: number | boolean | undefined;
-                    switch (findDevice.device_type) {
-                        case "slider":
-                            threshold_value = Number(findSchedule.threshold_value)
-                            break;
-                        case "tank_level":
-                            threshold_value = Number(findSchedule.threshold_value)
-                            break;
-                        case "switch":
-                            threshold_value = Boolean(findSchedule.threshold_value)
-                            break;
-                        default:
-                            threshold_value = Number(findSchedule.threshold_value ?? 0)
-                            break;
-                    }
-
-                    let conditionMet = false;
-                    switch (findSchedule.threshold_type) {
-                        case "<=":
-                            conditionMet = findDevice.value <= threshold_value;
-                            break;
-                        case ">=":
-                            conditionMet = findDevice.value >= threshold_value;
-                            break;
-                        case ">":
-                            conditionMet = findDevice.value > threshold_value;
-                            break;
-                        case "<":
-                            conditionMet = findDevice.value < threshold_value;
-                            break;
-                        case "==":
-                            conditionMet = findDevice.value == threshold_value;
-                            break;
-
-                    }
-                    if (conditionMet)
-                        switch (findSchedule.schedule_type) {
-                            case "on":
-                                sendData.state = true;
+                        let threshold_value: number | boolean | undefined;
+                        switch (findDevice.device_type) {
+                            case "slider":
+                                threshold_value = Number(findSchedule.threshold_value)
                                 break;
-                            case "off":
-                                sendData.state = false;
+                            case "tank_level":
+                                threshold_value = Number(findSchedule.threshold_value)
+                                break;
+                            case "switch":
+                                threshold_value = Boolean(findSchedule.threshold_value)
+                                break;
+                            default:
+                                threshold_value = Number(findSchedule.threshold_value ?? 0)
                                 break;
                         }
 
-                    const findTriggeredDevice = await Device.findOne({ chip_id: findSchedule.linked_chip_id });
-                    if (findTriggeredDevice) {
-                        findTriggeredDevice.state = sendData.state;
-                        findTriggeredDevice.value = sendData.value;
+                        let conditionMet = false;
+                        switch (findSchedule.threshold_type) {
+                            case "<=":
+                                conditionMet = findDevice.value <= threshold_value;
+                                break;
+                            case ">=":
+                                conditionMet = findDevice.value >= threshold_value;
+                                break;
+                            case ">":
+                                conditionMet = findDevice.value > threshold_value;
+                                break;
+                            case "<":
+                                conditionMet = findDevice.value < threshold_value;
+                                break;
+                            case "==":
+                                conditionMet = findDevice.value == threshold_value;
+                                break;
 
-                        socket.broadcast
-                            .to(`${endpoint as string}/${data[0]}`)
-                            .emit("device_sync", { ...sendData });
-                        
-                        await findTriggeredDevice.save();
+                        }
+                        if (conditionMet)
+                            switch (findSchedule.schedule_type) {
+                                case "on":
+                                    sendData.state = true;
+                                    break;
+                                case "off":
+                                    sendData.state = false;
+                                    break;
+                            }
+
+                        const findTriggeredDevice = await Device.findOne({ chip_id: findSchedule.linked_chip_id });
+                        if (findTriggeredDevice) {
+                            findTriggeredDevice.state = sendData.state;
+                            findTriggeredDevice.value = sendData.value;
+
+                            socket.broadcast
+                                .to(`${endpoint as string}/${data[0]}`)
+                                .emit("device_sync", { ...sendData });
+
+                            await findTriggeredDevice.save();
+                        }
                     }
                 }
-            }
+            });
 
 
             // sending to ui

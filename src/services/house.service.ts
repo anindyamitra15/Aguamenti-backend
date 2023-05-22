@@ -3,6 +3,7 @@ import { GenericResponse } from "../dtos/response.dtos";
 import House from "../models/house.model";
 import User from "../models/user.model";
 import Device from "../models/device.model";
+import { Types } from "mongoose";
 
 export const CreateHouse = async (house: CreateHouseDto): Promise<GenericResponse> => {
     try {
@@ -80,7 +81,7 @@ export const AddDevice = async (data: AddDeviceToHouseDto): Promise<GenericRespo
 
         // check if the user at least belongs to the old house containing the device
         if (findDevice.house_id) {
-            const index = data.existing_house_ids?.indexOf(findDevice.house_id);
+            const index = data.existing_house_ids?.indexOf(findDevice.house_id as Types.ObjectId);
             if (index === undefined || index < 0) return { code: 403, message: "Device doesn't belong to this user" };
         }
 
@@ -113,7 +114,7 @@ export const RemoveDevice = async (data: RemoveDeviceFromHouseDto): Promise<Gene
 
         // check if the user at least belongs to the old house containing the device
         if (findDevice.house_id) {
-            const index = data.existing_house_ids?.indexOf(findDevice.house_id);
+            const index = data.existing_house_ids?.indexOf(findDevice.house_id as Types.ObjectId);
             if (index === undefined || index < 0) return { code: 403, message: "Device doesn't belong to this user" };
         }
 

@@ -22,7 +22,7 @@ export const WeekDays: { [key: number]: WeekDay } = Object.freeze({
     6: 'Sunday'
 });
 
-interface ScheduleInterface extends Document {
+export interface ScheduleInterface extends Document {
     name: string,
     enabled: boolean,
     owner_id: Types.ObjectId,
@@ -38,6 +38,7 @@ interface ScheduleInterface extends Document {
     repeat_on?: [WeekDay],
     end_at?: Date,    //js built-in date class
     cron?: string,
+    isScheduled?: boolean
 };
 
 
@@ -55,7 +56,8 @@ const ScheduleSchema: Schema<ScheduleInterface> = new Schema(
         repeat_time: { type: Date },
         repeat_on: { type: [String], enum: WeekDays },
         end_at: { type: Date },
-        cron: { type: String }
+        cron: { type: String },
+        isScheduled: Boolean
     },
     {
         timestamps: true
@@ -91,6 +93,7 @@ ScheduleSchema.pre<ScheduleInterface>("save", function (next) {
         this.isModified("repeat_on") ||
         this.isModified("end_at")
     ) {
+        this.isScheduled = false;
         if (this.trigger_type == 'timing' && this.repeat_time) {//function to convert readable time data to cron string
             this.cron = dateToCron(this.repeat_time, this.repeat_on);
         }

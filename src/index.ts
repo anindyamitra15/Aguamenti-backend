@@ -12,6 +12,7 @@ import { instrument } from '@socket.io/admin-ui';
 import socketTokenAuth from './middlewares/socketauth.middleware';
 import { socketConnection } from './services/socket.io.service';
 import { ClientToServerEvents, InterServerEvents, ServerToClientEvents, SocketData } from './dtos/socket.io.dtos';
+import enableCron from './services/cron.service';
 
 
 
@@ -68,3 +69,6 @@ io.use(socketTokenAuth);
 
 //binding connection callback
 io.on("connection", socketConnection);
+
+//binding cron-based schedule functionality
+enableCron(io);
