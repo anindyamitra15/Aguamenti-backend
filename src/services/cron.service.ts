@@ -5,7 +5,7 @@ import Device from '../models/device.model';
 import { HouseInterface } from '../models/house.model';
 
 
-const enableCron = (socket: TypedServer) => {
+const enableCron = async(socket: TypedServer) => {
     // cron.schedule('26 1 * 5 1,2,3', () => {
     //     console.log('fired..');
 
@@ -16,9 +16,10 @@ const enableCron = (socket: TypedServer) => {
     //             state: true
     //         });
     // });
+    await Schedule.updateMany({ enabled: true, isScheduled: true, trigger_type: 'timing' }, { isScheduled: false });
     cron.schedule("* * * * *", async () => {
         // fetch all the cron strings from schedule database
-        const findSchedules = await Schedule.find({ isScheduled: false, trigger_type: 'timing' });
+        const findSchedules = await Schedule.find({ enabled: true, isScheduled: false, trigger_type: 'timing' });
         const numSchedules = findSchedules.length;
         if (!numSchedules) return;
         console.log(numSchedules, "schedule(s) found!");
@@ -52,7 +53,7 @@ const enableCron = (socket: TypedServer) => {
             });
 
         });
-        await Schedule.updateMany({ isScheduled: false, trigger_type: 'timing' }, { isScheduled: true });
+        await Schedule.updateMany({ enabled: true, isScheduled: false, trigger_type: 'timing' }, { isScheduled: true });
     });
 };
 export default enableCron;
