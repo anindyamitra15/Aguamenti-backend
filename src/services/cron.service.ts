@@ -25,7 +25,7 @@ const enableCron = (socket: TypedServer) => {
             );
             const numberOfSchedules = findSchedules.length;
             if (!numberOfSchedules) return;
-            console.log(numberOfSchedules, "schedule(s) yet to be scheduled.");
+            console.log(numberOfSchedules, "schedule(s) being scheduled");
 
             // schedule the cron in loop
             findSchedules.forEach(async (schedule: ScheduleInterface) => {
