@@ -5,56 +5,75 @@ import Device from '../models/device.model';
 import { HouseInterface } from '../models/house.model';
 
 
-const enableCron = async(socket: TypedServer) => {
-    // cron.schedule('26 1 * 5 1,2,3', () => {
-    //     console.log('fired..');
+const enableCron = (socket: TypedServer) => {
 
-    //     socket
-    //         .to(`pibzrzuvgg/10441820`)
-    //         .emit("device_sync", {
-    //             key: 0,
-    //             state: true
-    //         });
-    // });
-    await Schedule.updateMany({ enabled: true, isScheduled: true, trigger_type: 'timing' }, { isScheduled: false });
-    cron.schedule("* * * * *", async () => {
-        // fetch all the cron strings from schedule database
-        const findSchedules = await Schedule.find({ enabled: true, isScheduled: false, trigger_type: 'timing' });
-        const numSchedules = findSchedules.length;
-        if (!numSchedules) return;
-        console.log(numSchedules, "schedule(s) found!");
-        // schedule the cron in loop
-        findSchedules.forEach(async (schedule: ScheduleInterface) => {
-            if (!schedule.cron) return;
-            const findTargetDevice = await Device.findOne({ chip_id: schedule.linked_chip_id }).populate('house_id');
-            if (!findTargetDevice) return;
-            if (!findTargetDevice.house_id) return;
-            const data = findTargetDevice.chip_id.split('-');
-            const segments = data.length;
-            const house: HouseInterface = findTargetDevice.house_id as HouseInterface;
-            let state: boolean;
-            switch (schedule.schedule_type) {
-                case "on":
-                    state = true;
-                    break;
-                case "off":
-                    state = false;
-                    break;
-            }
+    Schedule.updateMany(
+        { trigger_type: 'timing' },
+        { isScheduled: false }
+    ).then(async _ => {
 
-            cron.schedule(schedule.cron, () => {
-                console.log("[cron] time event fired to", findTargetDevice.name, {state});
-                socket
-                    .to(`${house.endpoint}/${data[0]}`)
-                    .emit("device_sync", {
-                        key: (segments > 1) ? Number(data[1]) : 0,
-                        state
-                    });
+        console.log('Timing Schedules activated!');
+
+        cron.schedule("* * * * *", async () => {
+            // fetch all the cron strings from schedule database
+            const findSchedules = await Schedule.find(
+                {
+                    enabled: true,
+                    isScheduled: false,
+                    trigger_type: 'timing'
+                }
+            );
+            const numberOfSchedules = findSchedules.length;
+            if (!numberOfSchedules) return;
+            console.log(numberOfSchedules, "schedule(s) found!");
+
+            // schedule the cron in loop
+            findSchedules.forEach(async (schedule: ScheduleInterface) => {
+                if (!schedule.cron || !schedule.linked_chip_id) return;
+                // check for device validity/existence
+                const findTargetDevice = await Device.findOne({ chip_id: schedule.linked_chip_id }).populate('house_id');
+                if (!findTargetDevice || !findTargetDevice.house_id) return;
+
+                // address[0] contains the chip id
+                // address[1] contains the key number
+                const address = findTargetDevice.chip_id.split('-');
+                const segments = address.length;
+                const house: HouseInterface = findTargetDevice.house_id as HouseInterface;
+
+                let state: boolean | undefined;
+                switch (schedule.schedule_type) {
+                    case "on":
+                        state = true;
+                        break;
+                    case "off":
+                        state = false;
+                        break;
+                    default:
+                        state = undefined;
+                }
+
+                const payload = {
+                    key: (segments > 1) ? Number(address[1]) : 0,
+                    state
+                };
+
+                cron.schedule(schedule.cron, () => {
+                    console.log(
+                        "[cron] time event fired to",
+                        `${house.endpoint}/${address}`,
+                        payload
+                    );
+
+                    socket
+                        .to(`${house.endpoint}/${address[0]}`)
+                        .emit("to_device", payload);
+                });
+
             });
-
-        });
-        await Schedule.updateMany({ enabled: true, isScheduled: false, trigger_type: 'timing' }, { isScheduled: true });
-    });
+            await Schedule.updateMany({ enabled: true, isScheduled: false, trigger_type: 'timing' }, { isScheduled: true });
+        }
+        );
+    }
+    );
 };
 export default enableCron;
-

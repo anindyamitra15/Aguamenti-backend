@@ -99,7 +99,7 @@ const FromDeviceHandler = (socket: TypedSocket) => {
                                 break;
 
                         }
-                        if (conditionMet)
+                        if (conditionMet) {
                             switch (findSchedule.schedule_type) {
                                 case "on":
                                     sendData.state = true;
@@ -109,16 +109,19 @@ const FromDeviceHandler = (socket: TypedSocket) => {
                                     break;
                             }
 
-                        const findTriggeredDevice = await Device.findOne({ chip_id: findSchedule.linked_chip_id });
-                        if (findTriggeredDevice) {
-                            findTriggeredDevice.state = sendData.state;
-                            findTriggeredDevice.value = sendData.value;
+                            const findTriggeredDevice = await Device.findOne({ chip_id: findSchedule.linked_chip_id });
+                            if (findTriggeredDevice) {
+                                findTriggeredDevice.state = sendData.state;
+                                findTriggeredDevice.value = sendData.value;
 
-                            socket.broadcast
-                                .to(`${endpoint as string}/${data[0]}`)
-                                .emit("device_sync", { ...sendData });
+                                console.log("To", findTriggeredDevice.name, sendData);
 
-                            await findTriggeredDevice.save();
+                                socket.broadcast
+                                    .to(`${endpoint as string}/${data[0]}`)
+                                    .emit("device_sync", { ...sendData });
+
+                                await findTriggeredDevice.save();
+                            }
                         }
                     }
                 }
