@@ -33,7 +33,6 @@ const enableCron = (socket: TypedServer) => {
                 // check for device validity/existence
                 const findTargetDevice = await Device.findOne({ chip_id: schedule.linked_chip_id }).populate('house_id');
                 if (!findTargetDevice || !findTargetDevice.house_id) return;
-
                 // address[0] contains the chip id
                 // address[1] contains the key number
                 const address = findTargetDevice.chip_id.split('-');
@@ -60,7 +59,7 @@ const enableCron = (socket: TypedServer) => {
                 cron.schedule(schedule.cron, () => {
                     console.log(
                         "[cron] time event fired to",
-                        `${house.endpoint}/${address}`,
+                        `${house.endpoint}/${findTargetDevice.chip_id}`,
                         payload
                     );
 
@@ -70,7 +69,10 @@ const enableCron = (socket: TypedServer) => {
                 });
 
             });
-            await Schedule.updateMany({ enabled: true, isScheduled: false, trigger_type: 'timing' }, { isScheduled: true });
+            await Schedule.updateMany(
+                { enabled: true, isScheduled: false, trigger_type: 'timing' },
+                { isScheduled: true }
+            );
         }
         );
     }
